@@ -33,10 +33,19 @@ void lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor col
 				y += signA;
 			}
 			x -= signB;
-			//__завершить__
+			image.set(x,y,color);
 		}
 	}
 	else {
+		while (x != x2 && y != y2) {
+			f = f + B * signB;
+			if (f > 0) {
+				f -= A * singA;
+				x -= singB;
+			}
+			y += singA;
+			image.set(x,y,color);
+		}
 
 	}
 }
