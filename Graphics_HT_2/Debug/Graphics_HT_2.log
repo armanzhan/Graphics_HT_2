@@ -1,24 +1,26 @@
 ﻿  Source.cpp
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\header.h(13): warning C4305: инициализация: усечение из "double" в "float"
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(61): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(62): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(64): warning C4244: инициализация: преобразование "const _Ty" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(6): warning C4244: *=: преобразование "double" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(42): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(43): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(44): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(61): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(72): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(80): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(81): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(86): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(87): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(89): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(95): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(96): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(98): warning C4244: инициализация: преобразование "const _Ty" в "int", возможна потеря данных
           with
           [
               _Ty=float
           ]
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(65): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(71): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(72): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(76): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(77): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(79): warning C4244: инициализация: преобразование "const _Ty" в "int", возможна потеря данных
-          with
-          [
-              _Ty=float
-          ]
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(89): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(90): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(97): warning C4244: return: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(102): warning C4244: return: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(104): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(105): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(107): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(166): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\source.cpp(178): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
   Graphics_HT_2.vcxproj -> C:\Users\пк\source\repos\Graphics_HT_2\Debug\Graphics_HT_2.exe
