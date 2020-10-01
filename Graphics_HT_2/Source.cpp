@@ -51,24 +51,32 @@ void testCircleDDA(TGAImage &image, TGAColor color) {
 void testCircleParametr(TGAImage &image, TGAColor color) {
 }
 
-
+//test_object_______________
+void testObj(TGAImage &image) {
+	MyPaint::drawObj( image, "african_head.obj");
+}
 //___MAIN__________________
 int main(int argc, char** argv) {
-	TGAImage image(600, 200, TGAImage::RGB);
-
-	testBrasenhem(image, MyPaint::WHITE);//_________________________+
+	//TGAImage image(1000, 1000, TGAImage::RGB);
+	TGAImage image(300, 300, TGAImage::RGB);
+	//домашка 2
+	/*testBrasenhem(image, MyPaint::WHITE);//_________________________+
 	testDDAsimple(image, MyPaint::RED);//___________________________+
 	testDDAsymetric(image, MyPaint::GREEN);//_______________________+-(присутствует 4-связность)
-
+	//
 	testCircleBrasenhem(image, MyPaint::WHITE);//___________________+-(присутствует 4-связность)
 	//testCircleDDA(image, MyPaint::RED);
 	//testCircleParametr(image, MyPaint::GREEN);
-
+	*/
+	//домашка 3(размытие)
+	/*
 	//testlineBrasenhemMod( image, MyPaint::BLUE);
 	testlineVu( image, MyPaint::GREEN);//___________________________+
+	*/
+	//домашка 4(объекты)
+	testObj(image);
 
-	//image.flip_vertically();
+	image.flip_vertically();
 	image.write_tga_file("output.tga");
-
 	return 0;
 }

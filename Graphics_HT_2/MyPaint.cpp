@@ -21,8 +21,14 @@ float MyPaint::fpart(float x) {
 	return x - int(x);
 }
 
-TGAColor MyPaint::operator*(TGAColor color, float size) {
+TGAColor MyPaint::operator*(TGAColor& color, float size) {
 	TGAColor clr((int)(color.r * size), (int)(color.g * size), (int)(color.b * size), (int)(color.a * size));
+	return clr;
+}
+
+TGAColor MyPaint::operator+(TGAColor& color1, TGAColor color2)
+{
+	TGAColor clr((int)(color1.r + color2.r), (int)(color1.g + color2.g), (int)(color1.b + color2.b), (int)(color1.a + color2.a));
 	return clr;
 }
 
@@ -39,11 +45,11 @@ void MyPaint::lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGA
 	float y = y1;
 	image.set(x, y, color);
 	if (x1 == x2)
-		for (int i = 0; i != A; ++i)
+		for (int i = 0; i != abs(A); ++i)
 			image.set(x1, y1 + i * signA, color);
 	else
 		if (y1 == y2)
-			for (int i = 0; i != B; ++i)
+			for (int i = 0; i != abs(B); ++i)
 				image.set(x1 + i * signB, y1, color);
 		else {
 			if (abs(A) < abs(B)) {
@@ -224,4 +230,50 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 			intery = intery + grdnt;
 		}
 	}*/
+}
+
+void MyPaint::drawObj(TGAImage& image, std::string name)
+{
+	TGAColor color = RED;
+	std::ifstream fin(name); // открыли файл для чтения
+	//std::ifstream fin("z.txt"); // открыли файл для чтения
+	char ch;
+	std::string str;
+	char str1[50];
+	//fin >> buff; // считали первое слово из файла
+	std::vector<Point> points;
+	//std::cout << buff << std::endl; // напечатали это слово
+	while (fin.get(ch)) {
+		switch (ch)
+		{
+		case 'f': {
+			int f1, f2, f3, pass;
+			char c;
+			fin >> f1 >> c >> pass >> c >> pass >> /*c >>*/ f2 >> c >> pass >> c >> pass >> /*c >>*/ f3 >> c >> pass >> c >> pass /*>> c*/;
+			f1--;
+			f2--;
+			f3--;
+			lineBrasenhem(points[f1].x, points[f1].y, points[f2].x, points[f2].y, image, color);
+			lineBrasenhem(points[f2].x, points[f2].y, points[f3].x, points[f3].y, image, color);
+			lineBrasenhem(points[f3].x, points[f3].y, points[f1].x, points[f1].y, image, color);
+			break;
+		}
+		case 'v': {
+			double f1, f2, f3;
+			fin >> f1 >> f2 >> f3;
+			if (f3 != 0) {
+				points.push_back(Point((int)(f1 / f3), (int)(f2 / f3)));
+			}
+			else {
+				points.push_back(Point(0, 0));
+			}
+			break;
+		}
+		default: {
+			getline(fin,str);
+			break; 
+		}
+		}
+	}
+	fin.close(); 
 }
