@@ -1,31 +1,3 @@
-﻿  MyPaint.cpp
+﻿  Source.cpp
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.h(15): warning C4305: инициализация: усечение из "double" в "float"
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(9): warning C4244: *=: преобразование "double" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(44): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(45): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(46): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(63): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(74): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(82): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(83): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(88): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(89): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(91): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(97): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(98): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(100): warning C4244: инициализация: преобразование "const _Ty" в "int", возможна потеря данных
-          with
-          [
-              _Ty=float
-          ]
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(106): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(107): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(109): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(163): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(175): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(256): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(257): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(258): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(265): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.cpp(242): warning C4101: str1: неиспользованная локальная переменная
   Graphics_HT_2.vcxproj -> C:\Users\пк\source\repos\Graphics_HT_2\Debug\Graphics_HT_2.exe

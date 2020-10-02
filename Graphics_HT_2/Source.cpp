@@ -49,34 +49,66 @@ void testCircleBrasenhem(TGAImage &image, TGAColor color) {
 void testCircleDDA(TGAImage &image, TGAColor color) {
 }
 void testCircleParametr(TGAImage &image, TGAColor color) {
+	MyPaint::circleParametr(550, 50, 50, image, color);
+	MyPaint::circleParametr(550, 50, 25, image, color);
+	MyPaint::circleParametr(550, 50, 10, image, color);
 }
 
 //test_object_______________
 void testObj(TGAImage &image) {
-	MyPaint::drawObj( image, "african_head.obj");
+	MyPaint::drawObj( image, "african_head.txt");
 }
 //___MAIN__________________
 int main(int argc, char** argv) {
-	//TGAImage image(1000, 1000, TGAImage::RGB);
-	TGAImage image(300, 300, TGAImage::RGB);
-	//домашка 2
-	/*testBrasenhem(image, MyPaint::WHITE);//_________________________+
-	testDDAsimple(image, MyPaint::RED);//___________________________+
-	testDDAsymetric(image, MyPaint::GREEN);//_______________________+-(присутствует 4-связность)
-	//
-	testCircleBrasenhem(image, MyPaint::WHITE);//___________________+-(присутствует 4-связность)
-	//testCircleDDA(image, MyPaint::RED);
-	//testCircleParametr(image, MyPaint::GREEN);
-	*/
-	//домашка 3(размытие)
-	/*
-	//testlineBrasenhemMod( image, MyPaint::BLUE);
-	testlineVu( image, MyPaint::GREEN);//___________________________+
-	*/
-	//домашка 4(объекты)
-	testObj(image);
+	std::cout << "2 - HT 2, 3: lines, circles, Vu" << std::endl;
+	std::cout << "4 - parsing" << std::endl;
+	int a;
+	std::cin >> a;
+	switch (a)
+	{
+	case 2: {
 
-	image.flip_vertically();
-	image.write_tga_file("output.tga");
+		TGAImage image(600, 300, TGAImage::RGB);
+		//домашка 2
+		testBrasenhem(image, MyPaint::WHITE);//_________________________+
+		testDDAsimple(image, MyPaint::RED);//___________________________+
+		testDDAsymetric(image, MyPaint::GREEN);//_______________________+-(присутствует 4-связность)
+
+		testCircleBrasenhem(image, MyPaint::WHITE);//___________________+-(присутствует 4-связность)
+		//testCircleDDA(image, MyPaint::RED);//_________________________-
+		testCircleParametr(image, MyPaint::GREEN);//____________________+
+
+		//домашка 3(размытие)
+		//testlineBrasenhemMod( image, MyPaint::BLUE);//________________-
+		testlineVu( image, MyPaint::GREEN);//___________________________+
+
+		image.flip_vertically();
+		image.write_tga_file("output.tga");
+
+		std::cout << "the result is in output.tga" << std::endl;
+		break;
+	}
+	case 4: {
+		//домашка 4(объекты)
+		TGAImage image1(5000, 5000, TGAImage::RGB);
+
+		testObj(image1);
+		image1.flip_vertically();
+		image1.write_tga_file("output1.tga");
+		
+		std::cout << "the result is in output1.tga" << std::endl;
+		break;
+	}
+	default:{
+		std::cout << "нет такой команды, до свидания" << std::endl;
+		break;
+	}
+	}
+	//
+
+
+	std::cout << "tap a button to close the window" << std::endl;
+	char c;
+	std::cin >> c;
 	return 0;
 }

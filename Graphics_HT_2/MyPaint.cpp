@@ -139,7 +139,21 @@ void MyPaint::circleDDA(int x0, int y0, int radius, TGAImage &image, TGAColor co
 
 }
 void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
+	int x;
+	int y;
+	for (int i = 0; i != 45; ++i) {
+		x = radius*cos(float(i) / 180.0 * PI);
+		y = radius * sin(float(i) / 180.0 * PI);
+		image.set(x0 + x, y0 + y, color);
+		image.set(x0 - x, y0 + y, color);
+		image.set(x0 - x, y0 - y, color);
+		image.set(x0 + x, y0 - y, color);
 
+		image.set(x0 + y, y0 + x, color);
+		image.set(x0 - y, y0 + x, color);
+		image.set(x0 - y, y0 - x, color);
+		image.set(x0 + y, y0 - x, color);
+	}
 }
 
 //___размытие______________
@@ -235,45 +249,36 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 void MyPaint::drawObj(TGAImage& image, std::string name)
 {
 	TGAColor color = RED;
-	std::ifstream fin(name); // открыли файл для чтения
+	std::ifstream fin(name);
 	//std::ifstream fin("z.txt"); // открыли файл для чтения
 	char ch;
 	std::string str;
-	char str1[50];
-	//fin >> buff; // считали первое слово из файла
 	std::vector<Point> points;
-	//std::cout << buff << std::endl; // напечатали это слово
-	while (fin.get(ch)) {
-		switch (ch)
-		{
-		case 'f': {
+	while (fin >> str) {
+		
+		if(str=="f"){
 			int f1, f2, f3, pass;
-			char c;
-			fin >> f1 >> c >> pass >> c >> pass >> /*c >>*/ f2 >> c >> pass >> c >> pass >> /*c >>*/ f3 >> c >> pass >> c >> pass /*>> c*/;
+			char ch;
+			fin >> 
+				f1 >> ch >> pass >> ch >> pass >>//   1/1/1
+				f2 >> ch >> pass >> ch >> pass >> 
+				f3 >> ch >> pass >> ch >> pass;
 			f1--;
 			f2--;
 			f3--;
-			lineBrasenhem(points[f1].x, points[f1].y, points[f2].x, points[f2].y, image, color);
-			lineBrasenhem(points[f2].x, points[f2].y, points[f3].x, points[f3].y, image, color);
-			lineBrasenhem(points[f3].x, points[f3].y, points[f1].x, points[f1].y, image, color);
-			break;
+			lineBrasenhem(points[f1].x + 2500, points[f1].y + 2500, points[f2].x + 2500, points[f2].y + 2500, image, color);
+			lineBrasenhem(points[f2].x + 2500, points[f2].y + 2500, points[f3].x + 2500, points[f3].y + 2500, image, color);
+			lineBrasenhem(points[f1].x + 2500, points[f1].y + 2500, points[f3].x + 2500, points[f3].y + 2500, image, color);
 		}
-		case 'v': {
-			double f1, f2, f3;
+		if(str == "v"){
+			float f1,f2,f3;
 			fin >> f1 >> f2 >> f3;
-			if (f3 != 0) {
-				points.push_back(Point((int)(f1 / f3), (int)(f2 / f3)));
-			}
-			else {
-				points.push_back(Point(0, 0));
-			}
-			break;
-		}
-		default: {
-			getline(fin,str);
-			break; 
-		}
+			f1 *= 5000;
+			f2 *= 5000;
+			f3 += 10;
+			points.push_back(Point((f1 / f3), (f2 / f3)));
 		}
 	}
+	std::cout << points.size();
 	fin.close(); 
 }
