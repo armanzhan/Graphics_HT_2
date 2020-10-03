@@ -119,10 +119,10 @@ void MyPaint::circleBrasenhem(int x0, int y0, int radius, TGAImage &image, TGACo
 	int delta = 1 - 2 * radius;
 	int error = 0;
 	while (y >= 0) {
-		image.set(x0 + x, y0 + y, WHITE);
-		image.set(x0 + x, y0 - y, WHITE);
-		image.set(x0 - x, y0 + y, WHITE);
-		image.set(x0 - x, y0 - y, WHITE);
+		image.set(x0 + x, y0 + y, color);
+		image.set(x0 + x, y0 - y, color);
+		image.set(x0 - x, y0 + y, color);
+		image.set(x0 - x, y0 - y, color);
 		error = 2 * (delta + y) - 1;
 		if ((delta < 0) && (error <= 0)) {
 			delta += 2 * (++x) + 1;
@@ -136,6 +136,23 @@ void MyPaint::circleBrasenhem(int x0, int y0, int radius, TGAImage &image, TGACo
 	}
 }
 void MyPaint::circleDDA(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
+	float x = 0;
+	float y = radius;
+	int stop = radius / sqrt(2) + 1;
+	for (int i = 0; i != stop; ++i) {
+		image.set(x0 + x, y0 + y, color);
+		image.set(x0 + x, y0 - y, color);
+		image.set(x0 - x, y0 + y, color);
+		image.set(x0 - x, y0 - y, color);
+
+		image.set(x0 + y, y0 + x, color);
+		image.set(x0 + y, y0 - x, color);
+		image.set(x0 - y, y0 + x, color);
+		image.set(x0 - y, y0 - x, color);
+
+		x += 1;
+		y += 1 / sqrt(1 - x * x) + 0.5;
+	}
 
 }
 void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
@@ -266,9 +283,9 @@ void MyPaint::drawObj(TGAImage& image, std::string name)
 			f1--;
 			f2--;
 			f3--;
-			lineBrasenhem(points[f1].x + 2500, points[f1].y + 2500, points[f2].x + 2500, points[f2].y + 2500, image, color);
-			lineBrasenhem(points[f2].x + 2500, points[f2].y + 2500, points[f3].x + 2500, points[f3].y + 2500, image, color);
-			lineBrasenhem(points[f1].x + 2500, points[f1].y + 2500, points[f3].x + 2500, points[f3].y + 2500, image, color);
+			lineBrasenhem(points[f1].x + 1000, points[f1].y + 1000, points[f2].x + 1000, points[f2].y + 1000, image, color);
+			lineBrasenhem(points[f2].x + 1000, points[f2].y + 1000, points[f3].x + 1000, points[f3].y + 1000, image, color);
+			lineBrasenhem(points[f1].x + 1000, points[f1].y + 1000, points[f3].x + 1000, points[f3].y + 1000, image, color);
 		}
 		if(str == "v"){
 			float f1,f2,f3;
@@ -279,6 +296,6 @@ void MyPaint::drawObj(TGAImage& image, std::string name)
 			points.push_back(Point((f1 / f3), (f2 / f3)));
 		}
 	}
-	std::cout << points.size();
+	//std::cout << points.size();
 	fin.close(); 
 }

@@ -47,6 +47,9 @@ void testCircleBrasenhem(TGAImage &image, TGAColor color) {
 	MyPaint::circleBrasenhem(350, 50, 10, image, color);
 }
 void testCircleDDA(TGAImage &image, TGAColor color) {
+	MyPaint::circleParametr(450, 50, 50, image, color);
+	MyPaint::circleParametr(450, 50, 25, image, color);
+	MyPaint::circleParametr(450, 50, 10, image, color);
 }
 void testCircleParametr(TGAImage &image, TGAColor color) {
 	MyPaint::circleParametr(550, 50, 50, image, color);
@@ -75,7 +78,7 @@ int main(int argc, char** argv) {
 		testDDAsymetric(image, MyPaint::GREEN);//_______________________+-(присутствует 4-связность)
 
 		testCircleBrasenhem(image, MyPaint::WHITE);//___________________+-(присутствует 4-связность)
-		//testCircleDDA(image, MyPaint::RED);//_________________________-
+		testCircleDDA(image, MyPaint::RED);//_________________________-
 		testCircleParametr(image, MyPaint::GREEN);//____________________+
 
 		//домашка 3(размытие)
@@ -90,7 +93,7 @@ int main(int argc, char** argv) {
 	}
 	case 4: {
 		//домашка 4(объекты)
-		TGAImage image1(5000, 5000, TGAImage::RGB);
+		TGAImage image1(2000, 2000, TGAImage::RGB);
 
 		testObj(image1);
 		image1.flip_vertically();
