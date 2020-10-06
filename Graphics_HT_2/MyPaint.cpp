@@ -136,31 +136,43 @@ void MyPaint::circleBrasenhem(int x0, int y0, int radius, TGAImage &image, TGACo
 	}
 }
 void MyPaint::circleDDA(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
-	float x = 0;
 	float y = radius;
-	int stop = radius / sqrt(2) + 1;
-	for (int i = 0; i != stop; ++i) {
-		image.set(x0 + x, y0 + y, color);
-		image.set(x0 + x, y0 - y, color);
-		image.set(x0 - x, y0 + y, color);
-		image.set(x0 - x, y0 - y, color);
-
-		image.set(x0 + y, y0 + x, color);
-		image.set(x0 + y, y0 - x, color);
-		image.set(x0 - y, y0 + x, color);
-		image.set(x0 - y, y0 - x, color);
-
-		x += 1;
-		y += 1 / sqrt(1 - x * x) + 0.5;
+	float stop = (float)radius / sqrt(2.) + 1;
+	for (int x = 0; x < stop; ++x) {
+		image.set((int)((float)x0 + x + 0.5), int((float)y0 + y + 0.5), color);
+		image.set((int)((float)x0 + x + 0.5), int((float)y0 - y + 0.5), color);
+		image.set((int)((float)x0 - x + 0.5), int((float)y0 - y + 0.5), color);
+		image.set((int)((float)x0 - x + 0.5), int((float)y0 + y + 0.5), color);
+		
+		image.set((int)((float)x0 + y + 0.5), int((float)y0 + x + 0.5), color);
+		image.set((int)((float)x0 + y + 0.5), int((float)y0 - x + 0.5), color);
+		image.set((int)((float)x0 - y + 0.5), int((float)y0 - x + 0.5), color);
+		image.set((int)((float)x0 - y + 0.5), int((float)y0 + x + 0.5), color);
+		
+		y -= (float)x / sqrt(radius*radius - x * x);
 	}
 
 }
 void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
-	int x;
-	int y;
-	for (int i = 0; i != 45; ++i) {
-		x = radius*cos(float(i) / 180.0 * PI);
+	int x = radius, x1 = radius;
+	int y = 0, y1 = 0;
+	for (int i = 1; i != 45; ++i) {
+		x1 = x;
+		y1 = y;
+		x = radius *cos(float(i) / 180.0 * PI);
 		y = radius * sin(float(i) / 180.0 * PI);
+
+		lineBrasenhem(x0 + x, y0 + y, x0 + x1, y0 + y1, image, color);
+		lineBrasenhem(x0 - x, y0 + y, x0 - x1, y0 + y1, image, color);
+		lineBrasenhem(x0 - x, y0 - y, x0 - x1, y0 - y1, image, color);
+		lineBrasenhem(x0 + x, y0 - y, x0 + x1, y0 - y1, image, color);
+
+		lineBrasenhem(x0 + y, y0 + x, x0 + y1, y0 + x1, image, color);
+		lineBrasenhem(x0 - y, y0 + x, x0 - y1, y0 + x1, image, color);
+		lineBrasenhem(x0 - y, y0 - x, x0 - y1, y0 - x1, image, color);
+		lineBrasenhem(x0 + y, y0 - x, x0 + y1, y0 - x1, image, color);
+
+		/*
 		image.set(x0 + x, y0 + y, color);
 		image.set(x0 - x, y0 + y, color);
 		image.set(x0 - x, y0 - y, color);
@@ -169,7 +181,7 @@ void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGACol
 		image.set(x0 + y, y0 + x, color);
 		image.set(x0 - y, y0 + x, color);
 		image.set(x0 - y, y0 - x, color);
-		image.set(x0 + y, y0 - x, color);
+		image.set(x0 + y, y0 - x, color);*/
 	}
 }
 

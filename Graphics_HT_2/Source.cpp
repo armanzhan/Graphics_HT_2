@@ -47,9 +47,9 @@ void testCircleBrasenhem(TGAImage &image, TGAColor color) {
 	MyPaint::circleBrasenhem(350, 50, 10, image, color);
 }
 void testCircleDDA(TGAImage &image, TGAColor color) {
-	MyPaint::circleParametr(450, 50, 50, image, color);
-	MyPaint::circleParametr(450, 50, 25, image, color);
-	MyPaint::circleParametr(450, 50, 10, image, color);
+	MyPaint::circleDDA(450, 50, 50, image, color);
+	MyPaint::circleDDA(450, 50, 25, image, color);
+	MyPaint::circleDDA(450, 50, 10, image, color);
 }
 void testCircleParametr(TGAImage &image, TGAColor color) {
 	MyPaint::circleParametr(550, 50, 50, image, color);
