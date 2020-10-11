@@ -28,7 +28,12 @@ void testDDAsymetric(TGAImage &image, TGAColor color) {
 }
 //_test_lines____(0, 100) - (300, 200)___________
 void testlineBrasenhemMod(TGAImage &image, TGAColor color) {
-	//lineBrasenhemMod(0, 150, 100, 100, image, color);
+	MyPaint::lineBrasenhemMod(50, 150, 100, 153, image, color);
+	//MyPaint::lineBrasenhemMod(50, 150, 100, 100, image, color);
+	//MyPaint::lineBrasenhemMod(50, 150, 50, 100, image, color);
+	
+	MyPaint::lineBrasenhemMod(50, 150, 100, 125, image, color);
+	MyPaint::lineBrasenhemMod(50, 150, 100, 175, image, color);
 }
 void testlineVu(TGAImage &image, TGAColor color) {
 	//lineVu(150, 150, 110, 200, image, color);
@@ -82,7 +87,7 @@ int main(int argc, char** argv) {
 		testCircleParametr(image, MyPaint::GREEN);//____________________+
 
 		//домашка 3(размытие)
-		//testlineBrasenhemMod( image, MyPaint::BLUE);//________________-
+		testlineBrasenhemMod( image, MyPaint::BLUE);//________________-
 		testlineVu( image, MyPaint::GREEN);//___________________________+
 
 		image.flip_vertically();

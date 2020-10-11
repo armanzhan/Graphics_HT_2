@@ -148,6 +148,7 @@ void MyPaint::circleDDA(int x0, int y0, int radius, TGAImage &image, TGAColor co
 		image.set((int)((float)x0 + y + 0.5), int((float)y0 - x + 0.5), color);
 		image.set((int)((float)x0 - y + 0.5), int((float)y0 - x + 0.5), color);
 		image.set((int)((float)x0 - y + 0.5), int((float)y0 + x + 0.5), color);
+
 		
 		y -= (float)x / sqrt(radius*radius - x * x);
 	}
@@ -171,22 +172,55 @@ void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGACol
 		lineBrasenhem(x0 - y, y0 + x, x0 - y1, y0 + x1, image, color);
 		lineBrasenhem(x0 - y, y0 - x, x0 - y1, y0 - x1, image, color);
 		lineBrasenhem(x0 + y, y0 - x, x0 + y1, y0 - x1, image, color);
-
-		/*
-		image.set(x0 + x, y0 + y, color);
-		image.set(x0 - x, y0 + y, color);
-		image.set(x0 - x, y0 - y, color);
-		image.set(x0 + x, y0 - y, color);
-
-		image.set(x0 + y, y0 + x, color);
-		image.set(x0 - y, y0 + x, color);
-		image.set(x0 - y, y0 - x, color);
-		image.set(x0 + y, y0 - x, color);*/
 	}
 }
 
 //___размытие______________
 void MyPaint::lineBrasenhemMod(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color) {
+	if ((x1 - x2)*(y1 - y2) == 0) {
+		lineBrasenhem(x1, y1, x2, y2, image, color);
+	}
+	else {
+		int I = 255;
+		float x = x1;
+		float y = y1;
+		int px = abs(x2 - x1);
+		int py = abs(y2 - y1);
+		int signx = mysign(x2 - x1);
+		int signy = mysign(y2 - y1);
+		float t = I * py / px;
+		float e_ = I / 2;
+		float emax = I - t;
+		if (px > py) {
+			image.set(x, y, color * (t / 2));
+			for (int i = 0; i < px; ++i) {
+				if (e_ >= emax) {
+					y += signy;
+					e_ -= emax;
+				}
+				else {
+					e_ += t;
+				}
+				x += signx;
+				image.set(x, y, color * (t / 2));
+			}
+		}
+		else {
+			image.set(x, y, color * (t / 2));
+			for (int i = 0; i < py; ++i) {
+				if (e_ >= emax) {
+					x += signx;
+					e_ -= emax;
+				}
+				else {
+					e_ += t;
+				}
+				y += signy;
+				image.set(x, y, color * (t / 2));
+			}
+		}
+	}
+
 
 }
 void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color) {
