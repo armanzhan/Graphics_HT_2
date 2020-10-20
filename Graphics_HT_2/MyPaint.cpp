@@ -1,7 +1,6 @@
 #include "MyPaint.h"
 
-Point::Point(float x = 0, float y = 0) : x(x), y(y) {}
-Point::~Point(){}
+
 
 void MyPaint::mydeg(float &e, int what) {
 	double a = e;
@@ -309,39 +308,3 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 	}*/
 }
 
-void MyPaint::drawObj(TGAImage& image, std::string name)
-{
-	TGAColor color = RED;
-	std::ifstream fin(name);
-	//std::ifstream fin("z.txt"); // открыли файл для чтения
-	char ch;
-	std::string str;
-	std::vector<Point> points;
-	while (fin >> str) {
-		
-		if(str=="f"){
-			int f1, f2, f3, pass;
-			char ch;
-			fin >> 
-				f1 >> ch >> pass >> ch >> pass >>//   1/1/1
-				f2 >> ch >> pass >> ch >> pass >> 
-				f3 >> ch >> pass >> ch >> pass;
-			f1--;
-			f2--;
-			f3--;
-			lineBrasenhem(points[f1].x + 1000, points[f1].y + 1000, points[f2].x + 1000, points[f2].y + 1000, image, color);
-			lineBrasenhem(points[f2].x + 1000, points[f2].y + 1000, points[f3].x + 1000, points[f3].y + 1000, image, color);
-			lineBrasenhem(points[f1].x + 1000, points[f1].y + 1000, points[f3].x + 1000, points[f3].y + 1000, image, color);
-		}
-		if(str == "v"){
-			float f1,f2,f3;
-			fin >> f1 >> f2 >> f3;
-			f1 *= 5000;
-			f2 *= 5000;
-			f3 += 10;
-			points.push_back(Point((f1 / f3), (f2 / f3)));
-		}
-	}
-	//std::cout << points.size();
-	fin.close(); 
-}

@@ -1,12 +1,6 @@
 #pragma once
 #include "Header.h"
-struct Point
-{
-	float x, y;
-	Point(float x, float y);
-	~Point();
-};
-
+#include "Point.h"
 namespace MyPaint {
 	const TGAColor WHITE = TGAColor(255, 255, 255, 255);
 	const TGAColor RED = TGAColor(255, 0, 0, 255);
@@ -34,5 +28,5 @@ namespace MyPaint {
 	float fpart(float x);
 	void lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color);
 
-	void drawObj(TGAImage &image, std::string name);
+	
 }

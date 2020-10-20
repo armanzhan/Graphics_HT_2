@@ -6,3 +6,4 @@
 #include <vector>
 #include <fstream>
 #include "tgaimage.h"
+#include "vld.h""

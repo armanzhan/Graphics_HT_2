@@ -1,6 +1,6 @@
 ﻿#include "Header.h"
 #include "MyPaint.h"
-
+#include "MyParser.h"
 //____TESTS_________________
 
 //_test_lines____(0,0)-(300,100)___________
@@ -64,12 +64,16 @@ void testCircleParametr(TGAImage &image, TGAColor color) {
 
 //test_object_______________
 void testObj(TGAImage &image) {
-	MyPaint::drawObj( image, "african_head.txt");
+	MyParser::drawObj1( image, "african_head.txt");
+	MyParser::drawObj2(image, "african_head.txt");
 }
+
 //___MAIN__________________
 int main(int argc, char** argv) {
+	
 	std::cout << "2 - HT 2, 3: lines, circles, Vu" << std::endl;
-	std::cout << "4 - parsing" << std::endl;
+	std::cout << "4 - simple parsing" << std::endl;
+	std::cout << "4 - clever parsing" << std::endl;
 	int a;
 	std::cin >> a;
 	switch (a)
@@ -98,13 +102,21 @@ int main(int argc, char** argv) {
 	}
 	case 4: {
 		//домашка 4(объекты)
-		TGAImage image1(2000, 2000, TGAImage::RGB);
+		TGAImage image1(4000, 4000, TGAImage::RGB);
 
-		testObj(image1);
+		MyParser::drawObj1(image1, "african_head.txt");
 		image1.flip_vertically();
 		image1.write_tga_file("output1.tga");
 		
-		std::cout << "the result is in output1.tga" << std::endl;
+		std::cout << "the result 1 is in output1.tga" << std::endl;
+		
+		TGAImage image2(4000, 4000, TGAImage::RGB);
+
+		MyParser::drawObj2(image2, "african_head.txt");
+		image2.flip_vertically();
+		image2.write_tga_file("output2.tga");
+
+		std::cout << "the result 2 is in output2.tga" << std::endl;
 		break;
 	}
 	default:{
@@ -120,3 +132,38 @@ int main(int argc, char** argv) {
 	std::cin >> c;
 	return 0;
 }
+
+/*
+int main() {
+	std::string str = "v -100./ 20.5 300";
+	std::string word = "bbb";
+	//std::string number = "bbb";
+	int numint = 0;
+	float numfloat = 0.0;
+
+	std::cout << std::endl;
+	std::cout << "str         = |"<< str <<std::endl;
+
+	MyParser::firstWord(str, word);
+	
+	std::cout << "first word  = |"<<word << std::endl;
+	std::cout << "changed str = |"<< str << std::endl;
+	
+	MyParser::findFirstInt(str, numint);
+
+	std::cout << "first number= |" << numint << std::endl;
+	std::cout << "changed str = |" << str << std::endl;
+
+
+
+	MyParser::findFirstFloat(str, numfloat);
+
+	std::cout << "first number= |" << numfloat << std::endl;
+	std::cout << "changed str = |" << str << std::endl;
+
+
+	char c;
+	std::cin >> c;
+	//MyParser::findFirstNumber(str, word);
+	return 0;
+}*/
