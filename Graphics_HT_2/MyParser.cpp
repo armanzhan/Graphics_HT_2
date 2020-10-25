@@ -25,9 +25,12 @@ void MyParser::drawObj1(TGAImage& image, std::string name)
 			f3--;
 			int a = image.get_height() / 2;
 			int b = image.get_width() / 2;
-			MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f2].x + b, points[f2].y + a, image, color);
+
+			drawTriangle1(&points[f1], &points[f2], &points[f3], image, color);
+			//drawTriangle(points, f1, f2, f3, image, color);
+			/*MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f2].x + b, points[f2].y + a, image, color);
 			MyPaint::lineBrasenhem(points[f2].x + b, points[f2].y + a, points[f3].x + b, points[f3].y + a, image, color);
-			MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f3].x + b, points[f3].y + a, image, color);
+			MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f3].x + b, points[f3].y + a, image, color);*/
 		}
 		if (str == "v") {
 			float f1, f2, f3;
@@ -38,7 +41,7 @@ void MyParser::drawObj1(TGAImage& image, std::string name)
 			points.push_back(Point(f1, f2, f3));
 		}
 	}
-	//std::cout << points.size();
+	std::cout << "1 " << points.size() << std::endl;
 	fin.close();
 }
 void MyParser::drawObj2(TGAImage& image, std::string name)
@@ -54,7 +57,6 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 		firstWord(str, word);
 
 		if (word == "f") {
-			
 			int f[3] = { 0,0,0 };
 			int vn[3] = { 0,0,0 };
 			int vt[3] = { 0,0,0 };
@@ -68,48 +70,59 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 					findFirstInt(str, g);
 					vt[i] = g;
 					if (str[0] == '/') {
-
 						findFirstInt(str, vn[i]);
 					}
 				}
 			}
-			f[0]--;
-			f[1]--;
-			f[2]--;
-			drawTriangle(points, f[0], f[1], f[2], image, color);
+
+			//drawTriangle(points, f[0], f[1], f[2], image, color);
+			//if(points[f[0] - 1]->z > 500.3 && points[f[1] - 1]->z >500.3 && points[f[2] - 1]->z > 500.3)
+			drawTriangle1(points[f[0]-1], points[f[1]-1], points[f[2]-1], image, color);
 		}
 		else {
 			if (word == "v") {
 				float f[3] = { 0,0,0 };
-				//for (int i = 0; i != 3; ++i)
-				for (int i = 2; i != -1; --i)
+				for (int i = 0; i != 3; ++i) {//for (int i = 2; i != -1; --i)
 					findFirstFloat(str, f[i]);
+				}
 					//findFirstDouble(str, f[i]);
-				f[0] *= 500;//5000
-				f[1] *= 500;//5000
+				f[0] *= 1000;//5000
+				f[1] *= 1000;//5000
 				f[2] += 500;//10
-				//Point* point = new Point((f[0] / f[2]), (f[1] / f[2]));
-				points.push_back(new Point(f[0], f[1], f[2]));
+				Point* point = new Point(f[0], f[1], f[2]);
+				points.push_back(point);
 			}
 			else {
 				if (word == "vn") {
-					//считываем нормали
+					float vn[3] = { 0,0,0 };
+					//for (int i = 0; i != 3; ++i)
+					for (int i = 2; i != -1; --i)
+						findFirstFloat(str, vn[i]);
+					//findFirstDouble(str, f[i]);
+					//Point* point = new Point((f[0] / f[2]), (f[1] / f[2]));
+					points.push_back(new Point(vn[0], vn[1], vn[2]));
 				}
 				else {
 					if (word == "vt") {
-						//считываем координаты текстур				
+						float vt[3] = { 0,0,0 };
+						//for (int i = 0; i != 3; ++i)
+						for (int i = 2; i != -1; --i)
+							findFirstFloat(str, vt[i]);
+						//findFirstDouble(str, f[i]);
+						//Point* point = new Point((f[0] / f[2]), (f[1] / f[2]));
+						points.push_back(new Point(vt[0], vt[1], vt[2]));
 					}
 					//следующий else{ if(){...}}
 				}
 			}
 		}
 	}
+	std::cout <<"2 "<< points.size() << std::endl;
 	int size = points.size();
 	for (int i = size - 1; i != -1; --i) {
 		delete points[i];
 		points.pop_back();
 	}
-	std::cout << points.size();
 	fin.close();
 }
 void MyParser::drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, TGAImage& image, TGAColor color)
@@ -119,6 +132,14 @@ void MyParser::drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, 
 	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f2]->x + b, points[f2]->y + b, image, color);
 	MyPaint::lineBrasenhem(points[f2]->x + b, points[f2]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
 	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
+}
+void MyParser::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color)
+{
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point2->x + b, point2->y + b, image, color);
+	MyPaint::lineBrasenhem(point2->x + b, point2->y + a, point3->x + b, point3->y + b, image, color);
+	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point3->x + b, point3->y + b, image, color);
 }
 
 void MyParser::firstWord(std::string& str, std::string& word)//считываем первое слово, чтобы выполнить команду
@@ -136,6 +157,7 @@ void MyParser::firstWord(std::string& str, std::string& word)//считываем первое 
 
 void MyParser::findFirstFloat(std::string & str, float& number)
 {
+	bool e = false;
 	//ищем первую цифру
 	int i = 0;
 	while ((str[i] < '0' || str[i] > '9') && i < str.length()) {
@@ -143,7 +165,13 @@ void MyParser::findFirstFloat(std::string & str, float& number)
 	}
 	int start = i;
 	//ищем конец последовательности из цифр и точек
-	while ((str[i] > ('0' - 1) && str[i] < ('9' + 1)) || str[i] == '.') {
+	while ( (str[i] >= '0'  && str[i] <= '9' )  || str[i] == '.' || str[i] == 'e') {
+		if (str[i] == 'e') {
+			e = true;
+			if (str[i+1] == '-') {
+				i++;
+			}
+		}
 		i++;
 	}
 	int end = i;
@@ -157,29 +185,33 @@ void MyParser::findFirstFloat(std::string & str, float& number)
 	str1.erase(0, start);
 
 	//если наша строка - действительно число, то переписываем ее в тип float
-	if (isFloat(str1)) {
-		int numint = 0;
-		int numfloat = 0;
-		i = 0;
-		while (i < str1.length() && str1[i] != '.') {//считаем целую часть
-			numint = numint * 10 + str1[i] - '0';
-			i++;
-		}
-		number = numint;
-		if (i < str1.length() - 1 && str1[i] == '.') {//считаем все, что есть после точки
-			double deg = 1;
-			i++;
-			while (i < str1.length()) {
-				numfloat = numfloat * 10 + str1[i]-'0';
+	if (e) {
+		number = 0;
+	}else {
+		if (isFloat(str1)) {
+			int numint = 0;
+			int numfloat = 0;
+			i = 0;
+			while (i < str1.length() && str1[i] != '.') {//считаем целую часть
+				numint = numint * 10 + str1[i] - '0';
 				i++;
-				deg *= 0.1;
 			}
-			number += float(numfloat) * deg;//вот собственно и наше число
+			number = numint;
+			if (i < str1.length() - 1 && str1[i] == '.') {//считаем все, что есть после точки
+				double deg = 1;
+				i++;
+				while (i < str1.length()) {
+					numfloat = numfloat * 10 + str1[i] - '0';
+					i++;
+					deg *= 0.1;
+				}
+				number += float(numfloat) * deg;//вот собственно и наше число
+			}
+			number *= sign;//не забываем про знак
 		}
-		number *= sign;//не забываем про знак
+		else
+			str = "error";//с этим пока что ничег оне придумал
 	}
-	else
-		str = "error";//с этим пока что ничег оне придумал
 	str.erase(0, end);
 }
 void MyParser::findFirstDouble(std::string & str, double& number)

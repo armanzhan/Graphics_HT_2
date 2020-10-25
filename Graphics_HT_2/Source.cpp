@@ -64,10 +64,10 @@ void testCircleParametr(TGAImage &image, TGAColor color) {
 
 //test_object_______________
 void testObj(TGAImage &image) {
-	MyParser::drawObj1( image, "african_head.txt");
-	MyParser::drawObj2(image, "african_head.txt");
+	MyParser::drawObj1( image, "african_head.obj");
+	MyParser::drawObj2(image, "african_head.obj");
 }
-
+/**/
 //___MAIN__________________
 int main(int argc, char** argv) {
 	
@@ -132,10 +132,10 @@ int main(int argc, char** argv) {
 	std::cin >> c;
 	return 0;
 }
-
+/**/
 /*
 int main() {
-	std::string str = "v -100./ 20.5 300";
+	std::string str = "v -100e50/ 20.5 300e.";
 	std::string word = "bbb";
 	//std::string number = "bbb";
 	int numint = 0;
@@ -149,10 +149,10 @@ int main() {
 	std::cout << "first word  = |"<<word << std::endl;
 	std::cout << "changed str = |"<< str << std::endl;
 	
-	MyParser::findFirstInt(str, numint);
+	//MyParser::findFirstInt(str, numint);
 
-	std::cout << "first number= |" << numint << std::endl;
-	std::cout << "changed str = |" << str << std::endl;
+	//std::cout << "first number= |" << numint << std::endl;
+	//std::cout << "changed str = |" << str << std::endl;
 
 
 
@@ -166,4 +166,4 @@ int main() {
 	std::cin >> c;
 	//MyParser::findFirstNumber(str, word);
 	return 0;
-}*/
+}/**/

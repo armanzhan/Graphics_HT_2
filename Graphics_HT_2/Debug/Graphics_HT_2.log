@@ -1,4 +1,26 @@
-﻿  Source.cpp
+﻿  MyParser.cpp
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\header.h(9): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.h(9): warning C4305: инициализация: усечение из "double" в "float"
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(9): warning C4101: ch: неиспользованная локальная переменная
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(132): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(133): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(134): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(140): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(141): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(142): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(148): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(163): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(195): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(199): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(200): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(203): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(208): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(221): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(244): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(249): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(252): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(269): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(292): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(305): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\myparser.cpp(317): warning C4018: <: несоответствие типов со знаком и без знака
   Graphics_HT_2.vcxproj -> C:\Users\пк\source\repos\Graphics_HT_2\Debug\Graphics_HT_2.exe
