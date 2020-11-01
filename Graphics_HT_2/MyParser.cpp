@@ -1,49 +1,6 @@
 #include "MyParser.h"
 
-void MyParser::drawObj1(TGAImage& image, std::string name)
-{
-
-	TGAColor color = MyPaint::RED;
-	std::ifstream fin(name);
-	//std::ifstream fin("z.txt"); // открыли файл для чтения
-	char ch;
-	std::string str;
-	std::vector<Point> points;
-	while (fin >> str/*getline(fin, str)*/) {
-		//std::string word;
-		//firstWord(str, word);
-
-		if (str == "f") {
-			int f1, f2, f3, pass;
-			char ch;
-			fin >>
-				f1 >> ch >> pass >> ch >> pass >>//   1/1/1
-				f2 >> ch >> pass >> ch >> pass >>
-				f3 >> ch >> pass >> ch >> pass;
-			f1--;
-			f2--;
-			f3--;
-			int a = image.get_height() / 2;
-			int b = image.get_width() / 2;
-
-			drawTriangle1(&points[f1], &points[f2], &points[f3], image, color);
-			//drawTriangle(points, f1, f2, f3, image, color);
-			/*MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f2].x + b, points[f2].y + a, image, color);
-			MyPaint::lineBrasenhem(points[f2].x + b, points[f2].y + a, points[f3].x + b, points[f3].y + a, image, color);
-			MyPaint::lineBrasenhem(points[f1].x + b, points[f1].y + a, points[f3].x + b, points[f3].y + a, image, color);*/
-		}
-		if (str == "v") {
-			float f1, f2, f3;
-			fin >> f1 >> f2 >> f3;
-			f1 *= 1000;
-			f2 *= 1000;
-			f3 += 1000;
-			points.push_back(Point(f1, f2, f3));
-		}
-	}
-	std::cout << "1 " << points.size() << std::endl;
-	fin.close();
-}
+/*
 void MyParser::drawObj2(TGAImage& image, std::string name)
 {
 
@@ -52,6 +9,7 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 	//std::ifstream fin("z.txt"); // открыли файл для чтения
 	std::string str;
 	std::vector<Point*> points;
+	std::vector <Figure*> figures;
 	while (getline(fin, str)) {
 		std::string word;
 		firstWord(str, word);
@@ -74,10 +32,14 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 					}
 				}
 			}
+			Figure* figure = new Figure();
+			figure->vertex_back(points[f[0] - 1]);
+			figure->vertex_back(points[f[1] - 1]);
+			figure->vertex_back(points[f[2] - 1]);
 
-			//drawTriangle(points, f[0], f[1], f[2], image, color);
-			//if(points[f[0] - 1]->z > 500.3 && points[f[1] - 1]->z >500.3 && points[f[2] - 1]->z > 500.3)
-			drawTriangle1(points[f[0]-1], points[f[1]-1], points[f[2]-1], image, color);
+			figures.push_back(figure);
+
+			//drawTriangle1(points[f[0]-1], points[f[1]-1], points[f[2]-1], image, color);
 		}
 		else {
 			if (word == "v") {
@@ -86,9 +48,9 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 					findFirstFloat(str, f[i]);
 				}
 					//findFirstDouble(str, f[i]);
-				f[0] *= 1000;//5000
-				f[1] *= 1000;//5000
-				f[2] += 500;//10
+				//f[0] *= 1000;//5000
+				//f[1] *= 1000;//5000
+				//f[2] += 500;//10
 				Point* point = new Point(f[0], f[1], f[2]);
 				points.push_back(point);
 			}
@@ -117,29 +79,98 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 			}
 		}
 	}
-	std::cout <<"2 "<< points.size() << std::endl;
-	int size = points.size();
+
+	drawFigures(figures, image, color);
+
+	int size;
+	std::cout << "2 points"<< points.size() << std::endl;
+	std::cout << "2 triangles" << points.size() << std::endl;
+
+	size = figures.size();
+	for (int i = size - 1; i != -1; --i) {
+		delete figures[i];
+		figures.pop_back();
+	}
+
+	size = points.size();
 	for (int i = size - 1; i != -1; --i) {
 		delete points[i];
 		points.pop_back();
 	}
 	fin.close();
 }
-void MyParser::drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, TGAImage& image, TGAColor color)
+*/
+
+
+Object * MyParser::read_Obj(std::string name)
 {
-	int a = image.get_height() / 2;
-	int b = image.get_width() / 2;
-	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f2]->x + b, points[f2]->y + b, image, color);
-	MyPaint::lineBrasenhem(points[f2]->x + b, points[f2]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
-	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
-}
-void MyParser::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color)
-{
-	int a = image.get_height() / 2;
-	int b = image.get_width() / 2;
-	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point2->x + b, point2->y + b, image, color);
-	MyPaint::lineBrasenhem(point2->x + b, point2->y + a, point3->x + b, point3->y + b, image, color);
-	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point3->x + b, point3->y + b, image, color);
+	std::ifstream fin(name);
+	std::string str;
+
+	std::vector<Point*> points;
+	std::vector <std::vector<int>> ribs;
+
+	while (getline(fin, str)) {
+		std::string word;
+
+		firstWord(str, word);
+		if (word == "f") {
+			int f[3] = { 0,0,0 };
+			int vn[3] = { 0,0,0 };
+			int vt[3] = { 0,0,0 };
+
+			for (int i = 0; i != 3; ++i) {
+				findFirstInt(str, f[i]);
+				if (str[0] == '/' && str[1] == '/')
+					findFirstInt(str, vn[i]);
+				else {
+					int g = 0;
+					findFirstInt(str, g);
+					vt[i] = g;
+					if (str[0] == '/')
+						findFirstInt(str, vn[i]);
+				}
+			}
+			std::vector<int> cur_rib;
+			cur_rib.push_back(f[0] - 1);
+			cur_rib.push_back(f[1] - 1);
+			cur_rib.push_back(f[2] - 1);
+			ribs.push_back(cur_rib);
+		}
+		else {
+			if (word == "v") {
+				float f[3] = { 0,0,0 };
+				for (int i = 0; i != 3; ++i) {
+					findFirstFloat(str, f[i]);
+				}
+				Point* point = new Point(f[0], f[1], f[2]);
+				points.push_back(point);
+			}
+			else {
+				if (word == "vn") {
+					float vn[3] = { 0,0,0 };
+					for (int i = 2; i != -1; --i)
+						findFirstFloat(str, vn[i]);
+					points.push_back(new Point(vn[0], vn[1], vn[2]));
+				}
+				else {
+					if (word == "vt") {
+						float vt[3] = { 0,0,0 };
+						//for (int i = 0; i != 3; ++i)
+						for (int i = 2; i != -1; --i)
+							findFirstFloat(str, vt[i]);
+						//findFirstDouble(str, f[i]);
+						//Point* point = new Point((f[0] / f[2]), (f[1] / f[2]));
+						points.push_back(new Point(vt[0], vt[1], vt[2]));
+					}
+					//следующий else{ if(){...}}
+				}
+			}
+		}
+	}
+	fin.close();
+	Object * object = new Object(0, 0, 0, points, ribs);
+	return object;
 }
 
 void MyParser::firstWord(std::string& str, std::string& word)//считываем первое слово, чтобы выполнить команду
@@ -321,3 +352,4 @@ bool MyParser::isInt(const std::string & str)
 	}
 	return true;
 }
+// перенести в рисовальщик

@@ -308,3 +308,75 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 	}*/
 }
 
+// фигуры и объекты
+void MyPaint::drawFigure(Figure* figure, TGAImage& image, TGAColor color)
+{
+	int size = figure->size();
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	//double _z = 7;
+	double __x = 2500;//7000;
+	double __y = 2500;//7000;
+	for (int i = 0; i != size; ++i) {
+		//if (figure->get_vertex(i % size)->z > 0)
+		MyPaint::lineBrasenhem(
+			(figure->get_vertex(i % size)->x)		*__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+			(figure->get_vertex(i % size)->y)		*__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+			(figure->get_vertex((i + 1) % size)->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+			(figure->get_vertex((i + 1) % size)->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+			image, color);
+	}
+}
+void MyPaint::drawFigures(std::vector <Figure*> figures, TGAImage& image, TGAColor color)
+{
+	for (int i = 0; i != figures.size(); ++i) {
+		drawFigure(figures[i], image, color);
+	}
+}
+void MyPaint::drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, TGAImage& image, TGAColor color)
+{
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f2]->x + b, points[f2]->y + b, image, color);
+	MyPaint::lineBrasenhem(points[f2]->x + b, points[f2]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
+	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
+}
+void MyPaint::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color)
+{
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point2->x + b, point2->y + a, image, color);
+	MyPaint::lineBrasenhem(point2->x + b, point2->y + a, point3->x + b, point3->y + a, image, color);
+	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point3->x + b, point3->y + a, image, color);
+}
+
+void MyPaint::drawObj(Object * obj, TGAImage & image, TGAColor color)
+{
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	//double _z = 7;
+	double __x = 2500;//7000;
+	double __y = 2500;//7000;
+
+	int size = obj->size();
+
+
+	for (int i = 0; i != size; ++i) {
+		std::vector<int> ribs = *obj->getRibs(i);
+		for (int j = 0; j != ribs.size(); ++j) {
+			if (obj->get_vertex(ribs.at(j % size))->z > 0)
+				//MyPaint::lineBrasenhem(
+				//(obj->get_vertex(ribs.at(j	 % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+				//	(obj->get_vertex(ribs.at(j	 % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+				//	(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+				//	(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+				//	image, color);
+				MyPaint::lineVu(
+				(obj->get_vertex(ribs.at(j	 % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+					(obj->get_vertex(ribs.at(j	 % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+					(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+					(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+					image, color);
+		}
+	}
+}

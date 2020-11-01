@@ -64,9 +64,10 @@ void testCircleParametr(TGAImage &image, TGAColor color) {
 
 //test_object_______________
 void testObj(TGAImage &image) {
-	MyParser::drawObj1( image, "african_head.obj");
-	MyParser::drawObj2(image, "african_head.obj");
+	//MyParser::drawObj(image, "african_head.obj");
 }
+
+//test_zalivka(TGAImage &image);
 /**/
 //___MAIN__________________
 int main(int argc, char** argv) {
@@ -102,21 +103,46 @@ int main(int argc, char** argv) {
 	}
 	case 4: {
 		//домашка 4(объекты)
-		TGAImage image1(4000, 4000, TGAImage::RGB);
 
-		MyParser::drawObj1(image1, "african_head.txt");
-		image1.flip_vertically();
-		image1.write_tga_file("output1.tga");
-		
-		std::cout << "the result 1 is in output1.tga" << std::endl;
-		
 		TGAImage image2(4000, 4000, TGAImage::RGB);
 
-		MyParser::drawObj2(image2, "african_head.txt");
+		Object * head = MyParser::read_Obj("african_head.txt");
+		MyPaint::drawObj(head, image2, MyPaint::GREEN);
+		delete head;
 		image2.flip_vertically();
 		image2.write_tga_file("output2.tga");
 
 		std::cout << "the result 2 is in output2.tga" << std::endl;
+		break;
+	}
+	case 5: {
+		TGAImage image3(600, 300, TGAImage::RGB);
+		//домашка 2
+		testBrasenhem(image3, MyPaint::WHITE);//_________________________+
+		testDDAsimple(image3, MyPaint::RED);//___________________________+
+		testDDAsymetric(image3, MyPaint::GREEN);//_______________________+-(присутствует 4-связность)
+
+		testCircleBrasenhem(image3, MyPaint::WHITE);//___________________+-(присутствует 4-связность)
+		testCircleDDA(image3, MyPaint::RED);//_________________________-
+		testCircleParametr(image3, MyPaint::GREEN);//____________________+
+
+		//домашка 3(размытие)
+		testlineBrasenhemMod(image3, MyPaint::BLUE);//________________-
+		testlineVu(image3, MyPaint::GREEN);//___________________________+
+
+		image3.flip_vertically();
+		image3.write_tga_file("output3.tga");
+
+		std::cout << "the result is in output3.tga" << std::endl;
+		break;
+	}
+	case 6: {
+		/*TGAImage image4(4000, 4000, TGAImage::RGB);
+
+		test_drawObj2(image4, "african_head.txt");
+		image4.flip_vertically();
+		image4.write_tga_file("output4.tga");*/
+
 		break;
 	}
 	default:{
