@@ -20,11 +20,15 @@ float MyPaint::fpart(float x) {
 	return x - int(x);
 }
 
+
+
 TGAColor MyPaint::operator*(TGAColor& color, float size) {
 	TGAColor clr((int)(color.r * size), (int)(color.g * size), (int)(color.b * size), (int)(color.a * size));
 	return clr;
 }
-
+bool MyPaint::operator==(TGAColor color1, TGAColor color2) {
+	return (color1.r == color2.r) && (color1.g == color2.g) && (color1.b == color2.b);
+}
 TGAColor MyPaint::operator+(TGAColor& color1, TGAColor color2)
 {
 	TGAColor clr((int)(color1.r + color2.r), (int)(color1.g + color2.g), (int)(color1.b + color2.b), (int)(color1.a + color2.a));
@@ -309,38 +313,21 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 }
 
 // фигуры и объекты
-void MyPaint::drawFigure(Figure* figure, TGAImage& image, TGAColor color)
+void MyPaint::drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::vector<int> place)
 {
 	int size = figure->size();
-	int a = image.get_height() / 2;
-	int b = image.get_width() / 2;
-	//double _z = 7;
-	double __x = 2500;//7000;
-	double __y = 2500;//7000;
 	for (int i = 0; i != size; ++i) {
-		//if (figure->get_vertex(i % size)->z > 0)
 		MyPaint::lineBrasenhem(
-			(figure->get_vertex(i % size)->x)		*__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-			(figure->get_vertex(i % size)->y)		*__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-			(figure->get_vertex((i + 1) % size)->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-			(figure->get_vertex((i + 1) % size)->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+			(figure->get_vertex(i % size)->x)		+ place.at(0),
+			(figure->get_vertex(i % size)->y)		+ place.at(1),
+
+			(figure->get_vertex((i + 1) % size)->x) + place.at(0),
+			(figure->get_vertex((i + 1) % size)->y) + place.at(1),
+
 			image, color);
 	}
 }
-void MyPaint::drawFigures(std::vector <Figure*> figures, TGAImage& image, TGAColor color)
-{
-	for (int i = 0; i != figures.size(); ++i) {
-		drawFigure(figures[i], image, color);
-	}
-}
-void MyPaint::drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, TGAImage& image, TGAColor color)
-{
-	int a = image.get_height() / 2;
-	int b = image.get_width() / 2;
-	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f2]->x + b, points[f2]->y + b, image, color);
-	MyPaint::lineBrasenhem(points[f2]->x + b, points[f2]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
-	MyPaint::lineBrasenhem(points[f1]->x + b, points[f1]->y + a, points[f3]->x + b, points[f3]->y + b, image, color);
-}
+//оставить
 void MyPaint::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color)
 {
 	int a = image.get_height() / 2;
@@ -350,7 +337,7 @@ void MyPaint::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImag
 	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point3->x + b, point3->y + a, image, color);
 }
 
-void MyPaint::drawObj(Object * obj, TGAImage & image, TGAColor color)
+void MyPaint::drawObj_lines(Object * obj, TGAImage & image, TGAColor color)
 {
 	int a = image.get_height() / 2;
 	int b = image.get_width() / 2;
@@ -379,4 +366,200 @@ void MyPaint::drawObj(Object * obj, TGAImage & image, TGAColor color)
 					image, color);
 		}
 	}
+}
+
+void MyPaint::drawObj_zalivka(Object * obj, TGAImage & image, TGAColor color)
+{
+	int a = image.get_height() / 2;
+	int b = image.get_width() / 2;
+	//double _z = 7;
+	double __x = 2500;//7000;
+	double __y = 2500;//7000;
+
+	int size = obj->size();
+
+
+	for (int i = 0; i != size; ++i) {
+		std::vector<int> ribs = *obj->getRibs(i);
+
+		std::vector <Point*> figure = {}; 
+		for (int j = 0; j != ribs.size(); ++j) {
+			//if (obj->get_vertex(ribs.at(j % size))->z > 0) {
+				figure.push_back(
+					&Point(
+						obj->get_vertex(ribs.at(j % ribs.size()))->x *__x,
+						obj->get_vertex(ribs.at(j % ribs.size()))->y *__y, 
+						1)
+				);
+
+				MyPaint::lineBrasenhem(
+					(obj->get_vertex(ribs.at(j % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+					(obj->get_vertex(ribs.at(j % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+					(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+					(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+					image, color);
+			//}
+		}
+		int X = ((obj->get_vertex(ribs.at(0))->x) + (obj->get_vertex(ribs.at(1))->x) + (obj->get_vertex(ribs.at(2)))->x)*__x / 3;
+		int Y = ((obj->get_vertex(ribs.at(0))->y) + (obj->get_vertex(ribs.at(1))->y) + (obj->get_vertex(ribs.at(2)))->y)*__y / 3;
+		MyPaint::line__by__line_fill_algorithm_with_seed(figure, Point(X, Y, 1), { b, a }, image, color);
+	}
+}
+
+void MyPaint::an_iterative_algorithm_with_a_seed(Figure figure, Point point, std::vector<int> place, TGAImage& image, TGAColor color)
+{
+	int x = point.x + place.at(0);
+	int y = point.y + place.at(1);
+	MyPaint::drawFigure(&figure, image, color, place);
+	image.set(x, y, color);
+	int i = 0;
+	std::vector<int> steps = {0};
+	while (steps.size() != 0 /*&& 20 != (i++)*/) {
+		if (!(image.get(x, y + 1) == color)) {
+			y++;
+			steps.push_back(1);
+			image.set(x, y, color);
+		}
+		else {
+			if (!(image.get(x, y - 1) == color)) {
+				y--;
+				steps.push_back(2);
+				image.set(x, y, color);
+			}
+			else {
+				if (!(image.get(x + 1, y) == color)) {
+					x++;
+					steps.push_back(3);
+					image.set(x, y, color);
+				}
+				else {
+					if (!(image.get(x - 1, y) == color)) {
+						x--;
+						steps.push_back(4);
+						image.set(x, y, color);
+					}
+					else {
+						switch (steps[steps.size() - 1]) {
+						case 1: {
+							y--;
+								break;
+						}
+						case 2: {
+							y++;
+								break;
+						}
+						case 3: {
+							x--;
+								break;
+						}
+						case 4: {
+							x++;
+								break;
+						}
+							defaut: {
+								break;
+						}
+						}
+						steps.pop_back();
+					}
+				}
+			}
+		}
+	}
+	/*
+	bool stop = false;
+	while (!stop) {
+		if (!(image.get(x, y + 1) == color)) {
+			y++;
+			image.set(x, y, color);
+		}
+		else {
+			if (!(image.get(x, y - 1) == color)) {
+				y--;
+				image.set(x, y, color);
+			}
+			else {
+				if (!(image.get(x + 1, y) == color)) {
+					x++;
+					image.set(x, y, color);
+				}
+				else {
+					if (!(image.get(x - 1, y) == color)) {
+						x--;
+						image.set(x, y, color);
+					}
+					else {
+						stop = true;
+					}
+				}
+			}
+		}
+	}*/
+}
+
+void MyPaint::line__by__line_fill_algorithm_with_seed(Figure figure, Point point, std::vector<int> place, TGAImage & image, TGAColor color)
+{
+	int x = point.x + place.at(0);
+	int y = point.y + place.at(1);
+	
+	image.set(x, y, color);
+	std::vector <std::vector<int>> stack = { {x, y} };
+	do {
+		x = stack[0][0];
+		y = stack[0][1];
+		stack.erase(stack.begin(), stack.begin() + 1);
+		if (!(image.get(x, y) == color)) {
+			image.set(x, y, color);
+		}
+		bool up = false;
+		bool down = false;
+		for (int i = 1; !(image.get(x + i, y) == color); ++i) {
+			image.set(x + i, y, color);
+			if (!up && !(image.get(x + i, y + 1) == color)) {
+				stack.push_back({ x + i,y + 1 });
+				up = true;
+			}
+			else {
+				if (up && image.get(x + i, y + 1) == color) {
+					up = false;
+				}
+			}
+
+			if (!down && !(image.get(x + i, y - 1) == color)) {
+				stack.push_back({ x + i, y - 1 });
+				down = true;
+			}
+			else {
+				if (down && image.get(x + i, y - 1) == color) {
+					down = false;
+				}
+			}
+		}
+		for (int i = -1; !(image.get(x + i, y) == color); --i) {
+			image.set(x + i, y, color);
+			if (!up && !(image.get(x + i, y + 1) == color)) {
+				stack.push_back({ x + i,y + 1 });
+				up = true;
+			}
+			else {
+				if (up && image.get(x + i, y + 1) == color) {
+					up = false;
+				}
+			}
+
+			if (!down && !(image.get(x + i, y - 1) == color)) {
+				stack.push_back({ x + i, y - 1 });
+				down = true;
+			}
+			else {
+				if (down && image.get(x + i, y - 1) == color) {
+					down = false;
+				}
+			}
+		}
+	} while (stack.size() != 0 /*&& 20 != (i++)*/);
+}
+
+void MyPaint::line__by__line_algorithm_with_a_list_of_edge_points(Figure triangle, Point point, std::vector<int> place, TGAImage & image, TGAColor color)
+{
 }

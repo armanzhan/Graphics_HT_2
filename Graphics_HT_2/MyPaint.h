@@ -15,7 +15,7 @@ namespace MyPaint {
 	int mysign(int a);
 	TGAColor operator*(TGAColor& color, float size);
 	TGAColor operator+(TGAColor& color1, TGAColor color2);
-
+	bool operator==(TGAColor color1, TGAColor color2);
 	//___LINES__________________
 	void lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color);
 	void lineDDAsimple(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color);
@@ -32,13 +32,15 @@ namespace MyPaint {
 	void lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color);
 
 	// фигуры и не только
-	void drawFigure(Figure* figure, TGAImage& image, TGAColor color);
-	void drawFigures(std::vector <Figure*> figures, TGAImage& image, TGAColor color);
+	void drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::vector<int> place);
 
-	void drawTriangle(std::vector<Point*> points, int f1, int f2, int f3, TGAImage& image, TGAColor color);
 	void drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color);
-	void drawObj(Object * obj, TGAImage &image, TGAColor color);
+
+	void drawObj_lines(Object * obj, TGAImage &image, TGAColor color);
+	void drawObj_zalivka(Object * obj, TGAImage &image, TGAColor color);
 
 	//методы_заливки_________________________________
-
+	void an_iterative_algorithm_with_a_seed(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
+	void line__by__line_fill_algorithm_with_seed(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
+	void line__by__line_algorithm_with_a_list_of_edge_points(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
 }
