@@ -116,6 +116,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="LinAlg.cpp" />
+    <ClCompile Include="MyMatrix.cpp" />
     <ClCompile Include="MyPaint.cpp" />
     <ClCompile Include="MyParser.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -126,6 +128,8 @@
   <ItemGroup>
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="LinAlg.h" />
+    <ClInclude Include="MyMatrix.h" />
     <ClInclude Include="MyPaint.h" />
     <ClInclude Include="MyParser.h" />
     <ClInclude Include="Object.h" />

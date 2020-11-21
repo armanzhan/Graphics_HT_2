@@ -40,7 +40,7 @@ namespace MyPaint {
 	void drawObj_zalivka(Object * obj, TGAImage &image, TGAColor color);
 
 	//методы_заливки_________________________________
-	void an_iterative_algorithm_with_a_seed(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
-	void line__by__line_fill_algorithm_with_seed(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
+	void an_iterative_algorithm_with_a_seed(Point point, std::vector<int> place, TGAImage& image, TGAColor color);
+	void line__by__line_fill_algorithm_with_seed(Point point, std::vector<int> place, TGAImage& image, TGAColor color);
 	void line__by__line_algorithm_with_a_list_of_edge_points(Figure triangle, Point point, std::vector<int> place, TGAImage& image, TGAColor color);
 }

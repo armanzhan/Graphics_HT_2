@@ -107,7 +107,7 @@ Object * MyParser::read_Obj(std::string name)
 	std::ifstream fin(name);
 	std::string str;
 
-	std::vector<Point*> points;
+	std::vector<std::vector<double>> points;
 	std::vector <std::vector<int>> ribs;
 
 	while (getline(fin, str)) {
@@ -139,29 +139,37 @@ Object * MyParser::read_Obj(std::string name)
 		}
 		else {
 			if (word == "v") {
-				float f[3] = { 0,0,0 };
+				double f[3] = { 0,0,0 };
 				for (int i = 0; i != 3; ++i) {
-					findFirstFloat(str, f[i]);
+					//findFirstFloat(str, f[i]);
+					findFirstDouble(str, f[i]);
 				}
-				Point* point = new Point(f[0], f[1], f[2]);
+				//Point* point = new Point(f[0], f[1], f[2]);
+				std::vector<double> point = { f[0],f[1],f[2] };
 				points.push_back(point);
 			}
 			else {
 				if (word == "vn") {
-					float vn[3] = { 0,0,0 };
-					for (int i = 2; i != -1; --i)
-						findFirstFloat(str, vn[i]);
-					points.push_back(new Point(vn[0], vn[1], vn[2]));
+					//float vn[3] = { 0,0,0 };
+					double vn[3] = { 0,0,0 };
+					for (int i = 2; i != -1; --i) {
+						//findFirstFloat(str, vn[i]);
+						findFirstDouble(str, vn[i]);
+					}
+					std::vector<double> arr = { vn[0], vn[1], vn[2] };
+					points.push_back(arr);
 				}
 				else {
 					if (word == "vt") {
-						float vt[3] = { 0,0,0 };
+						double vt[3] = { 0,0,0 };
 						//for (int i = 0; i != 3; ++i)
-						for (int i = 2; i != -1; --i)
-							findFirstFloat(str, vt[i]);
-						//findFirstDouble(str, f[i]);
+						for (int i = 2; i != -1; --i) {
+							//findFirstFloat(str, vt[i]);
+							findFirstDouble(str, vt[i]);
+						}
 						//Point* point = new Point((f[0] / f[2]), (f[1] / f[2]));
-						points.push_back(new Point(vt[0], vt[1], vt[2]));
+						std::vector<double> arr = { vt[0], vt[1], vt[2] };
+						points.push_back(arr);
 					}
 					//следующий else{ if(){...}}
 				}
@@ -247,6 +255,8 @@ void MyParser::findFirstFloat(std::string & str, float& number)
 }
 void MyParser::findFirstDouble(std::string & str, double& number)
 {
+
+	bool e = false;
 	//ищем первую цифру
 	int i = 0;
 	while ((str[i] < '0' || str[i] > '9') && i < str.length()) {
@@ -254,7 +264,13 @@ void MyParser::findFirstDouble(std::string & str, double& number)
 	}
 	int start = i;
 	//ищем конец последовательности из цифр и точек
-	while ((str[i] > ('0' - 1) && str[i] < ('9' + 1)) || str[i] == '.') {
+	while ((str[i] >= '0'  && str[i] <= '9') || str[i] == '.' || str[i] == 'e') {
+		if (str[i] == 'e') {
+			e = true;
+			if (str[i + 1] == '-') {
+				i++;
+			}
+		}
 		i++;
 	}
 	int end = i;
@@ -268,29 +284,34 @@ void MyParser::findFirstDouble(std::string & str, double& number)
 	str1.erase(0, start);
 
 	//если наша строка - действительно число, то переписываем ее в тип float
-	if (isFloat(str1)) {
-		int numint = 0;
-		int numfloat = 0;
-		i = 0;
-		while (i < str1.length() && str1[i] != '.') {//считаем целую часть
-			numint = numint * 10 + str1[i] - '0';
-			i++;
-		}
-		number = numint;
-		if (i < str1.length() - 1 && str1[i] == '.') {//считаем все, что есть после точки
-			double deg = 1;
-			i++;
-			while (i < str1.length()) {
-				numfloat = numfloat * 10 + str1[i] - '0';
-				i++;
-				deg *= 0.1;
-			}
-			number += double(numfloat) * deg;//вот собственно и наше число
-		}
-		number *= sign;//не забываем про знак
+	if (e) {
+		number = 0;
 	}
-	else
-		str = "error";//с этим пока что ничег оне придумал
+	else {
+		if (isFloat(str1)) {
+			int numint = 0;
+			int numfloat = 0;
+			i = 0;
+			while (i < str1.length() && str1[i] != '.') {//считаем целую часть
+				numint = numint * 10 + str1[i] - '0';
+				i++;
+			}
+			number = numint;
+			if (i < str1.length() - 1 && str1[i] == '.') {//считаем все, что есть после точки
+				double deg = 1;
+				i++;
+				while (i < str1.length()) {
+					numfloat = numfloat * 10 + str1[i] - '0';
+					i++;
+					deg *= 0.1;
+				}
+				number += double(numfloat) * deg;//вот собственно и наше число
+			}
+			number *= sign;//не забываем про знак
+		}
+		else
+			str = "error";//с этим пока что ничег оне придумал
+	}
 	str.erase(0, end);
 }
 void MyParser::findFirstInt(std::string & str, int& number)

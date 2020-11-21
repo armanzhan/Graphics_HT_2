@@ -1,6 +1,8 @@
 ﻿#include "Header.h"
 #include "MyPaint.h"
 #include "MyParser.h"
+#include "MyMatrix.h"
+#include "Linalg.h"
 //____TESTS_________________
 
 //_test_lines____(0,0)-(300,100)___________
@@ -79,10 +81,11 @@ void test_an_iterative_algorithm_with_a_seed(TGAImage& image, TGAColor color){
 	MyPaint::drawFigure(&square, image, color, { 50, 25 });
 	MyPaint::drawFigure(&pentagon, image, color, { 25, 50 });
 	MyPaint::drawFigure(&hexagon, image, color, { 50, 50 });
-	MyPaint::an_iterative_algorithm_with_a_seed(triangle, Point(0, 5, 1), {25, 25}, image, color);
-	MyPaint::an_iterative_algorithm_with_a_seed(square, Point(0, 5, 1), { 50, 25 }, image, color);
-	MyPaint::an_iterative_algorithm_with_a_seed(pentagon, Point(0, 5, 1), { 25, 50 }, image, color);
-	MyPaint::an_iterative_algorithm_with_a_seed(hexagon, Point(0, 5, 1), { 50, 50 }, image, color);
+
+	MyPaint::an_iterative_algorithm_with_a_seed(Point(0, 5, 1), {25, 25}, image, color);
+	MyPaint::an_iterative_algorithm_with_a_seed(Point(0, 5, 1), { 50, 25 }, image, color);
+	MyPaint::an_iterative_algorithm_with_a_seed(Point(0, 5, 1), { 25, 50 }, image, color);
+	MyPaint::an_iterative_algorithm_with_a_seed(Point(0, 5, 1), { 50, 50 }, image, color);
 
 
 }
@@ -102,10 +105,10 @@ void test_line__by__line_fill_algorithm_with_seed(TGAImage& image, TGAColor colo
 	MyPaint::drawFigure(&pentagon, image, color, { 75, 50 });
 	MyPaint::drawFigure(&hexagon, image, color, { 100, 50 });
 
-	MyPaint::line__by__line_fill_algorithm_with_seed(triangle, Point(0, 5, 1), { 75, 25 }, image, color);
-	MyPaint::line__by__line_fill_algorithm_with_seed(square, Point(0, 5, 1), { 100, 25 }, image, color);
-	MyPaint::line__by__line_fill_algorithm_with_seed(pentagon, Point(0, 5, 1), { 75, 50 }, image, color);
-	MyPaint::line__by__line_fill_algorithm_with_seed(hexagon, Point(0, 5, 1), { 100, 50 }, image, color);
+	MyPaint::line__by__line_fill_algorithm_with_seed(Point(0, 5, 1), { 75, 25 }, image, color);
+	MyPaint::line__by__line_fill_algorithm_with_seed(Point(0, 5, 1), { 100, 25 }, image, color);
+	MyPaint::line__by__line_fill_algorithm_with_seed(Point(0, 5, 1), { 75, 50 }, image, color);
+	MyPaint::line__by__line_fill_algorithm_with_seed(Point(0, 5, 1), { 100, 50 }, image, color);
 
 	//line__by__line_fill_algorithm_with_seed()
 }
@@ -144,13 +147,14 @@ void test_line__by__line_algorithm_with_a_list_of_active_edges(TGAImage& image3,
 
 
 //___MAIN__________________
-
+/**/
 int main(int argc, char** argv) {
 	
 	std::cout << "2 - HT 2, 3: lines, circles, Vu" << std::endl;
 	std::cout << "4 - clever parsing" << std::endl;
 	std::cout << "5 - painting figures" << std::endl;
 	std::cout << "6 - painted head" << std::endl;
+	std::cout << "7 - turned head" << std::endl;
 	int a;
 	std::cin >> a;
 	switch (a)
@@ -216,6 +220,41 @@ int main(int argc, char** argv) {
 		std::cout << "the result 2 is in output4.tga" << std::endl;
 		break;
 	}
+	case 7: {
+		//домашка 4(объекты)
+
+		TGAImage image7(4000, 4000, TGAImage::RGB);
+
+		Object * head = MyParser::read_Obj("african_head.txt");
+		//
+		head->turn3D(0, 30);
+		head->turn3D(1, 30);
+		head->turn3D(2, 30);
+		head->turn3D(0, 30);
+		MyMatrix vec({
+			{1},
+			{1},
+			{0.1 } 
+			});
+		head->parallel_translation3D(vec);
+		MyMatrix koef({
+			{0.5},
+			{0.5},
+			{0.5}
+			}
+		);
+		head->zoom3D(koef);
+
+		MyPaint::drawObj_lines(head, image7, MyPaint::RED);
+		delete head;
+		image7.flip_vertically();
+		image7.write_tga_file("output7.tga");
+
+		std::cout << "the result 2 is in output7.tga" << std::endl;
+		break;
+	}
+
+
 	default:{
 		std::cout << "there is no such command" << std::endl;
 		break;
@@ -233,12 +272,84 @@ int main(int argc, char** argv) {
 /*
 bool operator==(TGAColor color1, TGAColor color2) {
 	return (color1.r == color2.r) && (color1.g == color2.g) && (color1.b == color2.b) && (color1.a == color2.a);
-}
+}/*
+MyMatrix oper(
+				{
+				{ 	1,			0,				0,			0	},
+				{ 	0,		MyCos(angle),	MySin(angle),	0,	},
+				{	0,	   -MySin(angle),	MyCos(angle),	0,	},
+				{	0,			0,				0,			1	}
+				});
+			matrix *= oper;
+
+*//*
 int main() {
-	std::cout << (MyPaint::RED == MyPaint::RED) << std::endl;
-	std::cout << (MyPaint::RED == MyPaint::BLUE) << std::endl;
-	std::cout << (1==0) << std::endl;
-	char c;
-	std::cin >> c;
+	/*MyMatrix a(
+		{
+		{ 0, 1, 0},
+		{ 0, 0, 1},
+		{ 1, 0, 0}
+		}
+	);
+	MyMatrix d(
+		{
+		{ 1, 2, 3},
+		{ 1, 2, 3},
+		{ 1, 2, 3},
+		{ 1, 2, 3}
+		}
+	);
+
+	MyMatrix e(
+		{
+		{ 1, 2, 1, 2},
+		{ 0, 0, 0, 0},
+		{ 1, 2, 1, 2},
+		}
+	);
+
+	MyMatrix b(
+		{
+		{ 1, 2, 3},
+		{ 4, 5, 6},
+		{ 7, 8, 9},
+		}
+	);
+	//MyMatrix c = LinAlg::turn2D(a, 45);
+	/*MyMatrix c = a * b;//* a;
+	std::cout << a << std::endl;
+	std::cout << b << std::endl;
+	std::cout << c << std::endl;	
+	MyMatrix c = d * e;//* a;
+	std::cout << c << std::endl;
+	std::cout << d << std::endl;
+	std::cout << e << std::endl;*/
+
+	//std::cout << LinAlg::MyCos(1) << std::endl;
+	//std::cout << LinAlg::MyCos(60) << std::endl;
+	/*
+	MyMatrix matrix(
+		{
+		{	1,		1,		1,		1	},
+		{	0,		0,		1,		1	},
+		{	0,		3,		4,		1	},
+		{	0,		1.7,	1,		1	}
+		});
+	MyMatrix oper(
+		{
+		{ 	1,				0,					0,				0	},
+		{ 	0,		LinAlg::MyCos(90),	LinAlg::MySin(90),		0	},
+		{	0,	   -LinAlg::MySin(90),	LinAlg::MyCos(90),		0	},
+		{	0,				0,					0,				1	}
+		});
+	std::cout << matrix << std::endl;
+	std::cout << oper << std::endl;
+	matrix *= oper;
+	std::cout << matrix << std::endl;
+	std::cout << LinAlg::MySin(30) << std::endl;
+	std::cout << LinAlg::MyCos(30) << std::endl;
+
+	char ch;
+	std::cin >> ch;
 	return 0;
 }/**/
