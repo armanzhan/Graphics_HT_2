@@ -59,3 +59,36 @@ void Object::parallel_translation3D(MyMatrix vec)
 	tops = tops_;
 }
 
+void Object::turn2D(int axis, double angle)
+{
+	MyMatrix tops_ = tops;
+	tops_.append(1);
+	LinAlg::turn3D_(tops_, 2/*ось z*/, angle);
+	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
+	tops = tops_;
+}
+
+void Object::zoom2D(MyMatrix vec)
+{
+	if (vec.getSize(0) == 2) {
+		vec.append({ {1} });
+	}
+	MyMatrix tops_ = tops;
+	tops_.append(1);
+	LinAlg::zoom3D_(tops_, vec);
+	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
+	tops = tops_;
+}
+
+void Object::parallel_translation2D(MyMatrix vec)
+{
+	if (vec.getSize(0) == 2) {
+		vec.append({ {0} });
+	}
+	MyMatrix tops_ = tops;
+	tops_.append(1);
+	LinAlg::parallel_translation3D_(tops_, vec);
+	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
+	tops = tops_;
+}
+

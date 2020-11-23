@@ -58,36 +58,46 @@ MyMatrix LinAlg::eye(int a, int b)
 MyMatrix LinAlg::parallel_translation2D(MyMatrix & matrix, MyMatrix & vector)
 {
 
-	if (vector.getSize(0) != 1 || vector.getSize(1) != 2 || matrix.getSize(1) != 3) {
+	if (vector.getSize(0) != 1 || vector.getSize(1) != 3 || matrix.getSize(1) != 2) {
 		//...
 	}
 	else {
+		MyMatrix matrix_ = matrix;
+		matrix_.append(1);
 		MyMatrix oper = eye(3 ,3);
 		oper.set(vector.at(0).at(0), 2, 0);
 		oper.set(vector.at(0).at(1), 2, 1);
-		return matrix * oper;
+		matrix_ *= oper;
+		matrix_.cut(0, matrix.getSize(1), 0, matrix.getSize(0));
+		return matrix_;
 	}
 }
 
 MyMatrix LinAlg::zoom2D(MyMatrix & matrix, MyMatrix & vector)
 {
-	if (vector.getSize(0) != 1 || vector.getSize(1) != 2 || matrix.getSize(1) != 3) {
+	if (vector.getSize(0) != 1 || vector.getSize(1) != 2 || matrix.getSize(1) != 2) {
 		//...
 	}
 	else {
+		MyMatrix matrix_ = matrix;
+		matrix_.append(1);
 		MyMatrix oper = eye(3, 3);
 		oper.set(vector.at(0).at(0), 0, 0);
 		oper.set(vector.at(0).at(1), 1, 1);
-		return matrix * oper;
+		matrix_ *= oper;
+		matrix_.cut(0, matrix.getSize(1), 0, matrix.getSize(0));
+		return matrix_;
 	}
 }
 
 MyMatrix LinAlg::turn2D(MyMatrix & matrix, double angle)
 {
-	if (matrix.getSize(1) != 3) {
+	if (matrix.getSize(1) != 2) {
 		//...
 	}
 	else {
+		MyMatrix matrix_ = matrix;
+		matrix_.append(1);
 		MyMatrix oper(
 			{
 				{	MyCos(angle),	MySin(angle),	0},
@@ -95,9 +105,9 @@ MyMatrix LinAlg::turn2D(MyMatrix & matrix, double angle)
 				{		0,				0,			1} 
 			}
 		);
-		MyMatrix matr = matrix * oper;
-		//std::cout << matr << std::endl;
-		return matr;
+		matrix_ *= oper;
+		matrix_.cut(0, matrix.getSize(1), 0, matrix.getSize(0));
+		return matrix_;
 	}
 }
 

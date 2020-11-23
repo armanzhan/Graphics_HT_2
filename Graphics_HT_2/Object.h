@@ -19,5 +19,9 @@ public:
 	void turn3D(int axis, double angle);
 	void zoom3D(MyMatrix operator_);
 	void parallel_translation3D(MyMatrix operator_);
+
+	void turn2D(int axis, double angle);// предполагается, что плоская фигура - это фигура, лежащая в плоскости z=1 
+	void zoom2D(MyMatrix operator_);
+	void parallel_translation2D(MyMatrix operator_);
 };
 

@@ -154,7 +154,9 @@ int main(int argc, char** argv) {
 	std::cout << "4 - clever parsing" << std::endl;
 	std::cout << "5 - painting figures" << std::endl;
 	std::cout << "6 - painted head" << std::endl;
-	std::cout << "7 - turned head" << std::endl;
+	std::cout << "7 - 2d functions" << std::endl;
+	std::cout << "8 - 3d functions" << std::endl;
+	std::cout << "9 - turned, translated and 'zoomed' head" << std::endl;
 	int a;
 	std::cin >> a;
 	switch (a)
@@ -221,9 +223,46 @@ int main(int argc, char** argv) {
 		break;
 	}
 	case 7: {
-		//домашка 4(объекты)
+		MyMatrix a(
+			{
+			{ 2.0, 2.0},
+			{ 1.0,  0 }
+		});
 
-		TGAImage image7(4000, 4000, TGAImage::RGB);
+		MyMatrix b = LinAlg::turn2D(a, 90);
+		std::cout << b << std::endl;
+
+		MyMatrix vec_to({ {2},{-1} });
+		MyMatrix c = LinAlg::parallel_translation2D(a,vec_to);
+		std::cout << c << std::endl;
+
+		MyMatrix zoo({ {2},{3} });
+		MyMatrix d = LinAlg::parallel_translation2D(a, zoo);
+		std::cout << d << std::endl;
+		break;
+	}
+	case 8: {
+		MyMatrix a(
+			{
+			{ 2.0, 2.0, 1 },
+			{ 1.0,  0,  0 },
+			{  3 ,  0,  1 }
+		});
+
+		MyMatrix b = LinAlg::turn3D(a, 1, 90);
+		std::cout << b << std::endl;
+
+		MyMatrix vec_to({ {2},{-1},{0} });
+		MyMatrix c = LinAlg::parallel_translation3D(a, vec_to);
+		std::cout << c << std::endl;
+
+		MyMatrix zoo({ {2},{3},{1} });
+		MyMatrix d = LinAlg::parallel_translation3D(a, zoo);
+		std::cout << d << std::endl;
+			break;
+	}
+	case 9: {
+		TGAImage image9(4000, 4000, TGAImage::RGB);
 
 		Object * head = MyParser::read_Obj("african_head.txt");
 		//
@@ -245,12 +284,12 @@ int main(int argc, char** argv) {
 		);
 		head->zoom3D(koef);
 
-		MyPaint::drawObj_lines(head, image7, MyPaint::RED);
+		MyPaint::drawObj_lines(head, image9, MyPaint::RED);
 		delete head;
-		image7.flip_vertically();
-		image7.write_tga_file("output7.tga");
+		image9.flip_vertically();
+		image9.write_tga_file("output9.tga");
 
-		std::cout << "the result 2 is in output7.tga" << std::endl;
+		std::cout << "the result 2 is in output9.tga" << std::endl;
 		break;
 	}
 

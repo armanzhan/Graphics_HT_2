@@ -101,6 +101,24 @@ void MyMatrix::operator-=(MyMatrix & matrix)
 	}
 }
 
+void MyMatrix::operator+=(double size)
+{
+	for (int i = 0; i != size0; ++i) {
+		for (int j = 0; j != size1; ++j) {
+			matrix.at(i).at(j) += size;
+		}
+	}
+}
+
+void MyMatrix::operator-=(double size)
+{
+	for (int i = 0; i != size0; ++i) {
+		for (int j = 0; j != size1; ++j) {
+			matrix.at(i).at(j) -= size;
+		}
+	}
+}
+
 void MyMatrix::operator*=(MyMatrix & b)
 {
 	if (size1 == b.getSize(0)) {
@@ -227,6 +245,38 @@ MyMatrix operator-(MyMatrix a, MyMatrix b)
 	else {
 		return a;
 	}
+}
+
+MyMatrix operator+(MyMatrix a, double size)
+{
+	std::vector<std::vector<double>> result;
+	for (int i = 0; i != a.getSize(0); ++i) {
+		std::vector<double> arr_;
+		int c = 0;
+		for (int j = 0; j != a.getSize(1); ++j) {
+			c = a.at(i).at(j) + size;
+			arr_.push_back(c);
+		}
+		result.push_back(arr_);
+	}
+	MyMatrix result_(result);
+	return result_;
+}
+
+MyMatrix operator-(MyMatrix a, double size)
+{
+	std::vector<std::vector<double>> result;
+	for (int i = 0; i != a.getSize(0); ++i) {
+		std::vector<double> arr_;
+		int c = 0;
+		for (int j = 0; j != a.getSize(1); ++j) {
+			c = a.at(i).at(j) - size;
+			arr_.push_back(c);
+		}
+		result.push_back(arr_);
+	}
+	MyMatrix result_(result);
+	return result_;
 }
 
 MyMatrix operator-(MyMatrix a)

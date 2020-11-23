@@ -17,6 +17,10 @@ public:
 
 	void operator+=(MyMatrix& matrix);
 	void operator-=(MyMatrix& matrix);
+
+	void operator+=(double size);
+	void operator-=(double size);
+
 	void operator*=(MyMatrix& matrix);
 	
 	void operator*=(double a);
@@ -31,6 +35,9 @@ public:
 MyMatrix operator*(MyMatrix a, MyMatrix b);
 MyMatrix operator+(MyMatrix a, MyMatrix b);
 MyMatrix operator-(MyMatrix a, MyMatrix b);
+
+MyMatrix operator+(MyMatrix a, double size);
+MyMatrix operator-(MyMatrix a, double size);
 
 MyMatrix operator-(MyMatrix a);
 MyMatrix operator*(int size, MyMatrix a);
