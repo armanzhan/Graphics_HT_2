@@ -31,7 +31,7 @@ void MyMatrix::append(std::vector<double> vec)
 		size0 += 1;
 	}
 	else {
-		system("shutdown /s");
+		//system("shutdown /s");
 	}
 }
 
@@ -72,6 +72,21 @@ std::vector<double> MyMatrix::at(int i)
 std::vector<double> MyMatrix::operator[](int i)
 {
 	return this->matrix[i];
+}
+
+void MyMatrix::operator=(MyMatrix & orig)
+{
+	size0 = orig.getSize(0);
+	size1 = orig.getSize(1);
+	std::vector<std::vector<double>> result;
+	for (int i = 0; i != size0; ++i) {
+		std::vector<double> arr;
+		for (int j = 0; j != size1; ++j) {
+			arr.push_back(orig.at(i).at(j));
+		}
+		result.push_back(arr);
+	}
+	this->matrix = result;
 }
 
 void MyMatrix::operator+=(MyMatrix & matrix)
@@ -176,10 +191,15 @@ MyMatrix::MyMatrix(std::vector<std::vector<double>> matrix)
 	size1 = matrix.at(0).size();
 	for (int i = 0; i < size0; ++i) {
 		if (size1 != matrix.at(i).size()) {
-			throw "constructor MyMatrix";//system("shutdown /s");
+			throw "constructor MyMatrix";		//system("shutdown /s");
 		}
 	}
 	this->matrix = matrix;
+}
+MyMatrix::MyMatrix()
+{
+	size0 = 0;
+	size1 = 0;
 }
 MyMatrix::~MyMatrix(){}
 
@@ -193,7 +213,7 @@ MyMatrix operator*(MyMatrix a, MyMatrix b)
 		for (int i = 0; i != a.getSize(0); ++i) {
 			std::vector<double> arr_;
 			for (int j = 0; j != b.getSize(1); ++j) {
-				int c = 0;
+				double c = 0;
 				for (int k = 0; k != a.getSize(1); ++k) {
 					c += a.at(i).at(k) * b.at(k).at(j);
 				}

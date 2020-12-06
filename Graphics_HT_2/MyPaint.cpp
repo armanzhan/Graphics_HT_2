@@ -1,7 +1,5 @@
 #include "MyPaint.h"
 
-
-
 void MyPaint::mydeg(float &e, int what) {
 	double a = e;
 	for (int i = 0; e < what; ++i)
@@ -20,8 +18,6 @@ float MyPaint::fpart(float x) {
 	return x - int(x);
 }
 
-
-
 TGAColor MyPaint::operator*(TGAColor& color, float size) {
 	TGAColor clr((int)(color.r * size), (int)(color.g * size), (int)(color.b * size), (int)(color.a * size));
 	return clr;
@@ -34,7 +30,6 @@ TGAColor MyPaint::operator+(TGAColor& color1, TGAColor color2)
 	TGAColor clr((int)(color1.r + color2.r), (int)(color1.g + color2.g), (int)(color1.b + color2.b), (int)(color1.a + color2.a));
 	return clr;
 }
-
 //___LINES__________________
 void MyPaint::lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color)
 {
@@ -114,7 +109,6 @@ void MyPaint::lineDDAsymetric(int x1, int y1, int x2, int y2, TGAImage &image, T
 		y += dy * e;
 	}
 }
-
 //___CIRCLE_________________
 void MyPaint::circleBrasenhem(int x0, int y0, int radius, TGAImage &image, TGAColor color) {
 	int x = 0;
@@ -177,7 +171,6 @@ void MyPaint::circleParametr(int x0, int y0, int radius, TGAImage &image, TGACol
 		lineBrasenhem(x0 + y, y0 - x, x0 + y1, y0 - x1, image, color);
 	}
 }
-
 //___размытие______________
 void MyPaint::lineBrasenhemMod(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor color) {
 	if ((x1 - x2)*(y1 - y2) == 0) {
@@ -231,8 +224,6 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 		lineBrasenhem(x1, y1, x2, y2, image, color);
 	}
 	else {
-		//int i = 4;
-		//int st = 255 / i;
 		int dx = abs(x2 - x1);
 		int dy = abs(y2 - y1);
 		int signX = mysign(x2 - x1);
@@ -266,52 +257,7 @@ void MyPaint::lineVu(int x1, int y1, int x2, int y2, TGAImage &image, TGAColor c
 			}
 		}
 	}
-	/*if (x1 == x2 || y1 == y2) {
-		lineBrasenhem(x1, y1, x2, y2, image, color);
-	}
-	else {
-		if (x2 < x1) {
-			std::swap(x2, x1);
-			std::swap(y2, y1);
-		}
-		int dx = x2 - x1;
-		int dy = y2 - y1;
-		float grdnt = float(dy) / float(dx);
-
-		float xend = x1;
-		float yend = y1 + grdnt * (xend - 1);
-		float xgap = 1 - fpart(x1 + 0.5);
-		int xpxl1 = xend;
-		int ypxl1 = int(yend);
-		float light1 = (1 - fpart(yend)) * xgap;
-		float light2 = fpart(yend) * xgap;
-		TGAColor clr1(int(color.r * light1), int(color.g * light1), int(color.b * light1), int(color.a * light1));
-		TGAColor clr2(int(color.r * light2), int(color.g * light2), int(color.b * light2), int(color.a * light2));
-		image.set(xpxl1, ypxl1, clr1);
-		image.set(xpxl1, ypxl1 + 1, clr2);
-		float intery = yend + grdnt; // первое y-пересечение для цикла
-
-		xend = x2;
-		yend = y2 + grdnt * (xend - x2);
-		xgap = fpart(x2 + 0.5);
-		float xpxl2 = xend;  // будет использоваться в основном цикле
-		float ypxl2 = int(yend);
-		image.set(xpxl2, ypxl2, clr1);
-		image.set(xpxl2, ypxl2 + 1, clr2);
-
-		for (int x = xpxl1 + 1; x != xpxl2; ++x) {
-			light1 = 1 - fpart(intery);
-			light2 = fpart(intery);
-			TGAColor clr_1(int(color.r * light1), int(color.g * light1), int(color.b * light1), int(color.a * light1));
-			TGAColor clr_2(int(color.r * light2), int(color.g * light2), int(color.b * light2), int(color.a * light2));
-
-			image.set(x, int(intery), clr_1);
-			image.set(x, int(intery) + 1, clr_2);
-			intery = intery + grdnt;
-		}
-	}*/
 }
-
 // фигуры и объекты
 void MyPaint::drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::vector<int> place)
 {
@@ -327,17 +273,7 @@ void MyPaint::drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::v
 			image, color);
 	}
 }
-//оставить
-void MyPaint::drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color)
-{
-	int a = image.get_height() / 2;
-	int b = image.get_width() / 2;
-	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point2->x + b, point2->y + a, image, color);
-	MyPaint::lineBrasenhem(point2->x + b, point2->y + a, point3->x + b, point3->y + a, image, color);
-	MyPaint::lineBrasenhem(point1->x + b, point1->y + a, point3->x + b, point3->y + a, image, color);
-}
-
-void MyPaint::drawObj_lines(Object * obj, TGAImage & image, TGAColor color)
+void MyPaint::drawObj_lines(std::vector<std::vector<int>> * all_ribs, MyMatrix* vertexes, TGAImage & image, TGAColor color)
 {
 	int a = image.get_height() / 2;
 	int b = image.get_width() / 2;
@@ -345,30 +281,30 @@ void MyPaint::drawObj_lines(Object * obj, TGAImage & image, TGAColor color)
 	double __x = 2000;//7000;
 	double __y = 2000;//7000;
 
-	int size = obj->size();
-
+	int size = all_ribs->size();
 
 	for (int i = 0; i != size; ++i) {
-		std::vector<int> ribs = *obj->getRibs(i);
+		std::vector<int> ribs = all_ribs->at(i);
 		for (int j = 0; j != ribs.size(); ++j) {
-			if (obj->get_vertex(ribs.at(j % size)).at(2) > 0)
-				//MyPaint::lineBrasenhem(
-				//(obj->get_vertex(ribs.at(j	 % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				//	(obj->get_vertex(ribs.at(j	 % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-				//	(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->x) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				//	(obj->get_vertex(ribs.at((j + 1) % ribs.size()))->y) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-				//	image, color);
+			if (vertexes->at(ribs.at(j % size)).at(2) > 0) {
+				/*MyPaint::lineBrasenhem(
+					(mod_->get_vertex(ribs.at(j	 % ribs.size()))->x) *__x + b,
+					(mod_->get_vertex(ribs.at(j	 % ribs.size()))->y) *__y + a,
+					(mod_->get_vertex(ribs.at((j + 1) % ribs.size()))->x) *__x + b,
+					(mod_->get_vertex(ribs.at((j + 1) % ribs.size()))->y) *__y + a,
+					image, color);*/
 				MyPaint::lineVu(
-					(obj->get_vertex(ribs.at(j	 % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-					(obj->get_vertex(ribs.at(j	 % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-					(obj->get_vertex(ribs.at((j + 1) % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-					(obj->get_vertex(ribs.at((j + 1) % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+					(vertexes->at(ribs.at(j	 % ribs.size())).at(0)) *__x + b,
+					(vertexes->at(ribs.at(j	 % ribs.size())).at(1)) *__y + a,
+					(vertexes->at(ribs.at((j + 1) % ribs.size())).at(0)) *__x + b,
+					(vertexes->at(ribs.at((j + 1) % ribs.size())).at(1)) *__y + a,
 					image, color);
+			}
 		}
 	}
 }
 
-void MyPaint::drawObj_zalivka(Object * obj, TGAImage & image, TGAColor color)
+void MyPaint::drawObj_zalivka(Model * mod_, TGAImage & image, TGAColor color)
 {
 	int a = image.get_height() / 2;
 	int b = image.get_width() / 2;
@@ -376,22 +312,22 @@ void MyPaint::drawObj_zalivka(Object * obj, TGAImage & image, TGAColor color)
 	double __x = 2500;//7000;
 	double __y = 2500;//7000;
 
-	int size = obj->size();
+	int size = mod_->size();
 
 
 	for (int i = 0; i != size; ++i) {
-		std::vector<int> ribs = *obj->getRibs(i);
+		std::vector<int> ribs = *mod_->getRibs(i);
 		std::cout << i << std::endl;
 		for (int j = 0; j != ribs.size(); ++j) {
 			MyPaint::lineBrasenhem(
-				(obj->get_vertex(ribs.at(j	 % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				(obj->get_vertex(ribs.at(j	 % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-				(obj->get_vertex(ribs.at((j + 1) % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				(obj->get_vertex(ribs.at((j + 1) % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+				(mod_->get_vertex(ribs.at(j	 % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+				(mod_->get_vertex(ribs.at(j	 % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+				(mod_->get_vertex(ribs.at((j + 1) % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
+				(mod_->get_vertex(ribs.at((j + 1) % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
 				image, color);
 		}
-		int X = ((obj->get_vertex(ribs.at(0)).at(0)) + (obj->get_vertex(ribs.at(1)).at(0)) + (obj->get_vertex(ribs.at(2))).at(0))*__x / 3;
-		int Y = ((obj->get_vertex(ribs.at(0)).at(1)) + (obj->get_vertex(ribs.at(1)).at(1)) + (obj->get_vertex(ribs.at(2))).at(1))*__y / 3;
+		int X = ((mod_->get_vertex(ribs.at(0)).at(0)) + (mod_->get_vertex(ribs.at(1)).at(0)) + (mod_->get_vertex(ribs.at(2))).at(0))*__x / 3;
+		int Y = ((mod_->get_vertex(ribs.at(0)).at(1)) + (mod_->get_vertex(ribs.at(1)).at(1)) + (mod_->get_vertex(ribs.at(2))).at(1))*__y / 3;
 
 		MyPaint::line__by__line_fill_algorithm_with_seed(Point(X, Y, 1), { b, a }, image, color);
 	}

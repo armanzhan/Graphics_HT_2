@@ -1,94 +1,47 @@
 #include "Object.h"
 
-MyMatrix Object::getTops()
+
+
+MyMatrix Object::getPosition()
 {
-	return tops;
+	return MyMatrix(
+		{ 
+		{ get_x() },
+		{ get_y() }, 
+		{ get_z() } 
+		}
+	);
 }
 
-std::vector<double> Object::get_vertex(int i)
+double Object::get_x()
 {
-	return tops.at(i);
+	return position.at(0).at(0);
 }
 
-int Object::size()
+double Object::get_y()
 {
-	return ribs.size();
+	return position.at(0).at(1);
 }
 
-std::vector<int>* Object::getRibs(int i)
+double Object::get_z()
 {
-	return &(ribs.at(i));
+	return position.at(0).at(2);
 }
 
-Object::Object(float x, float y, float z, std::vector<std::vector<double> > tops, std::vector<std::vector<int>> ribs):
-	x(x), y(y),z(z), tops(tops), ribs(ribs) {}
+MyMatrix Object::get_local_axes()
+{
+	return local_axes;
+}
+
+Object::Object(MyMatrix& position, MyMatrix& local_axes, Model* models, TGAColor color):
+	position(position), local_axes(local_axes), model(model), color(color)
+{}
+Object::Object( MyMatrix& position, MyMatrix& local_axes, TGAColor color) :
+	local_axes(local_axes), position(position), color(color)
+{}
+
 
 Object::~Object()
 {
-	/*int size = tops.size();
-	for (int i = size - 1; i != -1; --i) {
-		delete tops[i];
-		tops.pop_back();
-	}*/
+	// не писать, модель внешн€€. она может использоватьс€ во многих объектах
 }
-
-void Object::turn3D(int axis, double angle)
-{
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::turn3D_(tops_, axis, angle);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-
-void Object::zoom3D(MyMatrix vec)
-{
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::zoom3D_(tops_, vec);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-
-void Object::parallel_translation3D(MyMatrix vec)
-{
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::parallel_translation3D_(tops_, vec);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-
-void Object::turn2D(int axis, double angle)
-{
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::turn3D_(tops_, 2/*ось z*/, angle);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-
-void Object::zoom2D(MyMatrix vec)
-{
-	if (vec.getSize(0) == 2) {
-		vec.append({ {1} });
-	}
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::zoom3D_(tops_, vec);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-
-void Object::parallel_translation2D(MyMatrix vec)
-{
-	if (vec.getSize(0) == 2) {
-		vec.append({ {0} });
-	}
-	MyMatrix tops_ = tops;
-	tops_.append(1);
-	LinAlg::parallel_translation3D_(tops_, vec);
-	tops_.cut(0, tops.getSize(1), 0, tops.getSize(0));
-	tops = tops_;
-}
-

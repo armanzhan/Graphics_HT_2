@@ -102,7 +102,7 @@ void MyParser::drawObj2(TGAImage& image, std::string name)
 */
 
 
-Object * MyParser::read_Obj(std::string name)
+Model * MyParser::read_Obj(std::string name)
 {
 	std::ifstream fin(name);
 	std::string str;
@@ -177,8 +177,8 @@ Object * MyParser::read_Obj(std::string name)
 		}
 	}
 	fin.close();
-	Object * object = new Object(0, 0, 0, points, ribs);
-	return object;
+	Model * model = new Model(0, 0, 0, points, ribs);
+	return model;
 }
 
 void MyParser::firstWord(std::string& str, std::string& word)//считываем первое слово, чтобы выполнить команду

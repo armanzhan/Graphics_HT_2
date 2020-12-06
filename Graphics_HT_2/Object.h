@@ -1,27 +1,25 @@
 #pragma once
-#include "Figure.h"
-#include "LinAlg.h" 
-
+#include <vector>
+#include "MyMatrix.h"
+#include "Model.h"
+#include "MyPaint.h"
 class Object
 {
 private:
-	float x, y, z;
-	MyMatrix tops;
-	std::vector<std::vector<int> > ribs; 
+	MyMatrix position;			//позици€ начала локальных координат  - √ќ–»«ќЌ“јЋ№Ќџ… ¬≈ “ќ–
+	MyMatrix local_axes;		// локальна€ система координат(3 вектора) расположенные горизонтально
+	MyMatrix model_size;		// вектор-3, который хранит данные о том, насоклько используемые резмеры модели отличаютс€ от считанных
 public:
-	MyMatrix getTops();
-	std::vector<double> get_vertex(int i);
-	int size();
-	std::vector<int>* getRibs(int i);
-	Object(float x, float y, float z, std::vector<std::vector<double>>, std::vector<std::vector<int>> ribs);
-	~Object();
+	Model* model;				//указатель на используемую модель
+	TGAColor color;				//цвет модели(пока что без текстур)
+	MyMatrix getPosition();
+	double get_x();				//координата центра по x
+	double get_y();				//координата центра по y
+	double get_z();				//координата центра по z
+	MyMatrix get_local_axes();	//копи€ локальной системы координат
 
-	void turn3D(int axis, double angle);
-	void zoom3D(MyMatrix operator_);
-	void parallel_translation3D(MyMatrix operator_);
-
-	void turn2D(int axis, double angle);// предполагаетс€, что плоска€ фигура - это фигура, лежаща€ в плоскости z=1 
-	void zoom2D(MyMatrix operator_);
-	void parallel_translation2D(MyMatrix operator_);
+	Object(MyMatrix& position, MyMatrix& local_axes, Model* models, TGAColor color);	//создание видимого объекта
+	Object(MyMatrix& position, MyMatrix& local_axes, TGAColor color);					//создание источника света
+	~Object();					//деструктор не нужен, так как здеcь внутри ничего не создаетс€, все указfтели на внешние объекты.
 };
 

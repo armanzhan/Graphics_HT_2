@@ -2,7 +2,7 @@
 #include "Header.h"
 #include "Point.h"
 #include "Figure.h"
-#include "Object.h"
+#include "Model.h"
 
 namespace MyPaint {
 	const TGAColor WHITE = TGAColor(255, 255, 255, 255);
@@ -34,10 +34,8 @@ namespace MyPaint {
 	// фигуры и не только
 	void drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::vector<int> place);
 
-	void drawTriangle1(Point* point1, Point* point2, Point* point3, TGAImage& image, TGAColor color);
-
-	void drawObj_lines(Object * obj, TGAImage &image, TGAColor color);
-	void drawObj_zalivka(Object * obj, TGAImage &image, TGAColor color);
+	void drawObj_lines(std::vector<std::vector<int>> * ribs, MyMatrix* vertex, TGAImage &image, TGAColor color);
+	void drawObj_zalivka(Model * mod_, TGAImage &image, TGAColor color);
 
 	//методы_заливки_________________________________
 	void an_iterative_algorithm_with_a_seed(Point point, std::vector<int> place, TGAImage& image, TGAColor color);

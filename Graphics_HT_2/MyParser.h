@@ -3,10 +3,10 @@
 #include "Point.h"
 #include "Figure.h"
 #include "MyPaint.h"
-#include "Object.h"
+#include "Model.h"
 namespace MyParser {
 	
-	Object * read_Obj(std::string name);
+	Model * read_Obj(std::string name);
 
 	void firstWord(std::string& str, std::string& word);
 

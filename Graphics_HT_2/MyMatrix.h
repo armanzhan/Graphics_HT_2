@@ -15,6 +15,8 @@ public:
 	std::vector<double> at(int i);
 	std::vector<double> operator[](int i);
 
+	void operator=(MyMatrix& matrix);
+
 	void operator+=(MyMatrix& matrix);
 	void operator-=(MyMatrix& matrix);
 
@@ -29,6 +31,7 @@ public:
 	double norm();
 
 	MyMatrix(std::vector<std::vector<double> > matrix);
+	MyMatrix();
 	~MyMatrix();
 };
 

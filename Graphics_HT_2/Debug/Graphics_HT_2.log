@@ -1,13 +1,4 @@
-﻿  LinAlg.cpp
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\header.h(9): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-  Source.cpp
+﻿  Source.cpp
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\header.h(9): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
 c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\mypaint.h(12): warning C4305: инициализация: усечение из "double" в "float"
-  Создание кода...
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(74): warning C4715: LinAlg::parallel_translation2D: значение возвращается не при всех путях выполнения
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(91): warning C4715: LinAlg::zoom2D: значение возвращается не при всех путях выполнения
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(112): warning C4715: LinAlg::turn2D: значение возвращается не при всех путях выполнения
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(127): warning C4715: LinAlg::parallel_translation3D: значение возвращается не при всех путях выполнения
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(156): warning C4715: LinAlg::zoom3D: значение возвращается не при всех путях выполнения
-c:\users\пк\source\repos\graphics_ht_2\graphics_ht_2\linalg.cpp(218): warning C4715: LinAlg::turn3D: значение возвращается не при всех путях выполнения
   Graphics_HT_2.vcxproj -> C:\Users\пк\source\repos\Graphics_HT_2\Debug\Graphics_HT_2.exe
