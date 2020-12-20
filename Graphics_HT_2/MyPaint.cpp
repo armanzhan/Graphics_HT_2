@@ -51,7 +51,7 @@ void MyPaint::lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGA
 				image.set(x1 + i * signB, y1, color);
 		else {
 			if (abs(A) < abs(B)) {
-				while (x != x2 && y != y2) {
+				while (x != x2) {
 					f = f + A * signA;
 					if (f > 0) {
 						f -= B * signB;
@@ -62,7 +62,7 @@ void MyPaint::lineBrasenhem(int x1, int y1, int x2, int y2, TGAImage &image, TGA
 				}
 			}
 			else {
-				while (x != x2 && y != y2) {
+				while (y != y2) {
 					f = f + B * signB;
 					if (f > 0) {
 						f -= A * signA;
@@ -283,10 +283,10 @@ void MyPaint::drawObj_lines(std::vector<std::vector<int>> * all_ribs, MyMatrix* 
 
 	int size = all_ribs->size();
 
-	for (int i = 0; i != size; ++i) {
+	for (int i = 0; i != size; ++i) { // int i = /*0*/1476; i != /*size*/1477; ++i
 		std::vector<int> ribs = all_ribs->at(i);
 		for (int j = 0; j != ribs.size(); ++j) {
-			if (vertexes->at(ribs.at(j % size)).at(2) > 0) {
+			//if (vertexes->at(ribs.at(j % size)).at(2) > 0) {
 				/*MyPaint::lineBrasenhem(
 					(mod_->get_vertex(ribs.at(j	 % ribs.size()))->x) *__x + b,
 					(mod_->get_vertex(ribs.at(j	 % ribs.size()))->y) *__y + a,
@@ -299,37 +299,50 @@ void MyPaint::drawObj_lines(std::vector<std::vector<int>> * all_ribs, MyMatrix* 
 					(vertexes->at(ribs.at((j + 1) % ribs.size())).at(0)) *__x + b,
 					(vertexes->at(ribs.at((j + 1) % ribs.size())).at(1)) *__y + a,
 					image, color);
-			}
+			//}
 		}
 	}
 }
 
-void MyPaint::drawObj_zalivka(Model * mod_, TGAImage & image, TGAColor color)
+void MyPaint::drawObj_zalivka(std::vector<std::vector<int>> * all_ribs, MyMatrix* vertexes, TGAImage & image, TGAColor color)
 {
 	int a = image.get_height() / 2;
 	int b = image.get_width() / 2;
 	//double _z = 7;
-	double __x = 2500;//7000;
-	double __y = 2500;//7000;
+	double __x = 2000;//7000;
+	double __y = 2000;//7000;
 
-	int size = mod_->size();
-
+	int size = all_ribs->size();
 
 	for (int i = 0; i != size; ++i) {
-		std::vector<int> ribs = *mod_->getRibs(i);
-		std::cout << i << std::endl;
+		std::vector<int> ribs = all_ribs->at(i);
+		std::cout << "i = " << i << "---------------------------------------------" << std::endl;
 		for (int j = 0; j != ribs.size(); ++j) {
-			MyPaint::lineBrasenhem(
-				(mod_->get_vertex(ribs.at(j	 % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				(mod_->get_vertex(ribs.at(j	 % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
-				(mod_->get_vertex(ribs.at((j + 1) % ribs.size())).at(0)) *__x /*/ (figure->get_vertex(i % size)->z + _z)*/ + b,
-				(mod_->get_vertex(ribs.at((j + 1) % ribs.size())).at(1)) *__y /*/ (figure->get_vertex(i % size)->z + _z)*/ + a,
+			//std::cout << ribs.at(j) << " "<< vertexes->at(ribs.at(j	 % ribs.size())).at(0) *__x + b  << std::endl;
+			//std::cout << ribs.at(j) << " "<< vertexes->at(ribs.at(j	 % ribs.size())).at(1) *__x + b  << std::endl;
+			//if (vertexes->at(ribs.at(j % size)).at(2) > 0) {
+				MyPaint::lineBrasenhem(
+				(vertexes->at(ribs.at(j	 % ribs.size())).at(0)) *__x + b,
+				(vertexes->at(ribs.at(j	 % ribs.size())).at(1)) *__y + a,
+				(vertexes->at(ribs.at((j + 1) % ribs.size())).at(0)) *__x + b,
+				(vertexes->at(ribs.at((j + 1) % ribs.size())).at(1)) *__y + a,
 				image, color);
+			//}
 		}
-		int X = ((mod_->get_vertex(ribs.at(0)).at(0)) + (mod_->get_vertex(ribs.at(1)).at(0)) + (mod_->get_vertex(ribs.at(2))).at(0))*__x / 3;
-		int Y = ((mod_->get_vertex(ribs.at(0)).at(1)) + (mod_->get_vertex(ribs.at(1)).at(1)) + (mod_->get_vertex(ribs.at(2))).at(1))*__y / 3;
+		
+		//float X = ((vertexes->at(ribs.at(0)).at(0)) + (vertexes->at(ribs.at(1)).at(0)) + (vertexes->at(ribs.at(2))).at(0)) * __x / 3;
+		//float Y = ((vertexes->at(ribs.at(0)).at(1)) + (vertexes->at(ribs.at(1)).at(1)) + (vertexes->at(ribs.at(2))).at(1)) * __y / 3;
+		//MyPaint::line__by__line_fill_algorithm_with_seed(Point(X, Y, 1), { b, a }, image, color);
+	}
+	
+	for (int i = 0; i != size; ++i) {
+		std::vector<int> ribs = all_ribs->at(i);
+		//if (vertexes->at(ribs.at(0 % size)).at(2) > 0 && vertexes->at(ribs.at(1 % size)).at(2) > 0 && vertexes->at(ribs.at(2 % size)).at(2) > 0) {	
+		float X = ((vertexes->at(ribs.at(0)).at(0)) + (vertexes->at(ribs.at(1)).at(0)) + (vertexes->at(ribs.at(2))).at(0)) * __x / 3;
+		float Y = ((vertexes->at(ribs.at(0)).at(1)) + (vertexes->at(ribs.at(1)).at(1)) + (vertexes->at(ribs.at(2))).at(1)) * __y / 3;
 
 		MyPaint::line__by__line_fill_algorithm_with_seed(Point(X, Y, 1), { b, a }, image, color);
+		//}
 	}
 }
 
@@ -458,7 +471,7 @@ void MyPaint::line__by__line_fill_algorithm_with_seed(Point point, std::vector<i
 					}
 				}
 			}
-		} while (stack.size() != 0 && 20 > (i++)/**/);
+		} while (stack.size() != 0 /* &&  40 > (i++)/**/);
 	}
 }
 

@@ -33,10 +33,10 @@ MyMatrix Object::get_local_axes()
 	return local_axes;
 }
 
-Object::Object(MyMatrix& position, MyMatrix& local_axes, Model* models, TGAColor color):
+Object::Object(MyMatrix position, MyMatrix local_axes, Model * model, TGAColor color):
 	position(position), local_axes(local_axes), model(model), color(color)
 {}
-Object::Object( MyMatrix& position, MyMatrix& local_axes, TGAColor color) :
+Object::Object( MyMatrix position, MyMatrix local_axes, TGAColor color) :
 	local_axes(local_axes), position(position), color(color)
 {}
 

@@ -10,7 +10,7 @@ private:
 	MyMatrix local_axes;		// локальная система координат(3 вектора) расположенные горизонтально
 	MyMatrix model_size;		// вектор-3, который хранит данные о том, насоклько используемые резмеры модели отличаются от считанных
 public:
-	Model* model;				//указатель на используемую модель
+	Model * model;				//указатель на используемую модель
 	TGAColor color;				//цвет модели(пока что без текстур)
 	MyMatrix getPosition();
 	double get_x();				//координата центра по x
@@ -18,8 +18,8 @@ public:
 	double get_z();				//координата центра по z
 	MyMatrix get_local_axes();	//копия локальной системы координат
 
-	Object(MyMatrix& position, MyMatrix& local_axes, Model* models, TGAColor color);	//создание видимого объекта
-	Object(MyMatrix& position, MyMatrix& local_axes, TGAColor color);					//создание источника света
+	Object(MyMatrix position, MyMatrix local_axes, Model * model, TGAColor color);	//создание видимого объекта
+	Object(MyMatrix position, MyMatrix local_axes, TGAColor color);					//создание источника света
 	~Object();					//деструктор не нужен, так как здеcь внутри ничего не создается, все указfтели на внешние объекты.
 };
 

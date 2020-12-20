@@ -3,6 +3,7 @@
 #include "MyParser.h"
 #include "MyMatrix.h"
 #include "Linalg.h"
+#include "Scene.h"
 
 //____TESTS_________________
 
@@ -157,14 +158,15 @@ int main(int argc, char** argv) {
 		std::cout << std::endl;
 		std::cout << "при запуске программ данные и переменные вводить не нужно" << std::endl;
 		std::cout << std::endl;
-		std::cout << "2 - Домашние задания 2, 3 - линии и окружности + линии размытия Ву и бразенхема" << std::endl;
-		std::cout << "4 - Парсинг объекта из файла формата .obj" << std::endl;
-		std::cout << "5 - Домашнее задание на закраску фигур" << std::endl;
-		std::cout << "6 - Красим голову(не рекомендуется запускать, не работает)" << std::endl;
-		std::cout << "7 - Преобразования 2d" << std::endl;
-		std::cout << "8 - Преобразования 3d" << std::endl;
-		std::cout << "9 - Преобразования координат головы" << std::endl;
-		std::cout << "0 - выход из цикла" << std::endl;
+		std::cout << "2 -  Домашние задания 2, 3 - линии и окружности + линии размытия Ву и бразенхема" << std::endl;
+		std::cout << "4 -  Парсинг объекта из файла формата .obj" << std::endl;
+		std::cout << "5 -  Домашнее задание на закраску фигур" << std::endl;
+		std::cout << "6 -  Красим голову(не рекомендуется запускать, не работает)" << std::endl;
+		std::cout << "7 -  Преобразования 2d" << std::endl;
+		std::cout << "8 -  Преобразования 3d" << std::endl;
+		std::cout << "9 -  Преобразования координат головы" << std::endl;
+		std::cout << "10 - Камерные преобразования объектов" << std::endl;
+		std::cout << "0  - выход из цикла" << std::endl;
 		std::cout << "введите цифру:" << std::endl;
 		std::cin >> a;
 		std::cout << "============================================================" << std::endl;
@@ -181,7 +183,7 @@ int main(int argc, char** argv) {
 			testCircleDDA(image, MyPaint::RED);//_________________________-
 			testCircleParametr(image, MyPaint::GREEN);//____________________+
 			//домашка 3(размытие)
-			testlineBrasenhemMod(image, MyPaint::BLUE);//________________-
+			testlineBrasenhemMod(image, MyPaint::WHITE);//________________-
 			testlineVu(image, MyPaint::GREEN);//___________________________+
 
 			image.flip_vertically();
@@ -242,7 +244,7 @@ int main(int argc, char** argv) {
 			TGAImage image4(4000, 4000, TGAImage::RGB);
 
 			Model * head = MyParser::read_Obj("african_head.txt");
-			MyPaint::drawObj_zalivka(head, image4, MyPaint::GREEN);
+			MyPaint::drawObj_zalivka(&(head->ribs), &(head->tops), image4, MyPaint::GREEN);
 			delete head;
 			image4.flip_vertically();
 			image4.write_tga_file("output4.tga");
@@ -316,12 +318,12 @@ int main(int argc, char** argv) {
 
 			Model * head = MyParser::read_Obj("african_head.txt");
 			//
-			std::cout << "поворот вокруг оси x на 30 градусов" << std::endl;
-			head->turn3D(0, 30);
+			/*std::cout << "поворот вокруг оси x на 30 градусов" << std::endl;
+			head->turn3D(0, 45);
 			std::cout << "поворот вокруг оси y на 60 градусов" << std::endl;
 			head->turn3D(1, 60);
 			std::cout << "поворот вокруг оси z на 45 градусов" << std::endl;
-			head->turn3D(2, 45);
+			head->turn3D(2, 45);*/
 			MyMatrix vec({
 				{1},
 				{1},
@@ -336,8 +338,8 @@ int main(int argc, char** argv) {
 				{0.5}
 				}
 			);
-			std::cout << "сжатие головы в 2 раза по всем осям" << std::endl;
-			head->zoom3D(koef);
+			/*std::cout << "сжатие головы в 2 раза по всем осям" << std::endl;
+			head->zoom3D(koef);*/
 
 			MyPaint::drawObj_lines(&(head->ribs), &(head->tops), image9, MyPaint::RED);
 			delete head;
@@ -345,6 +347,25 @@ int main(int argc, char** argv) {
 			image9.write_tga_file("output9.tga");
 
 			std::cout << "результат работы программы в файле output9.tga" << std::endl;
+			break;
+		}
+		case 10: {
+			TGAImage image10(4000, 4000, TGAImage::RGB);
+
+
+			Object camera(MyMatrix({ {0,0,0} }), MyMatrix({ {1,0,0},{0,1,0},{0,0,1} }), MyPaint::WHITE);
+			Scene * scene = new Scene( &camera, image10);
+
+			Model * head = MyParser::read_Obj("african_head.txt");
+			scene->add_visible_object(head, MyMatrix({ {0,0,0} }), MyMatrix({ {1,0,0},{0,0,1},{0,1,0} }), MyPaint::BLUE);
+
+			scene->render_scene();
+
+			delete scene;
+			delete head;
+			image10.flip_vertically();
+			image10.write_tga_file("output10.tga");
+			std::cout << "результат работы программы в файле output10.tga" << std::endl;
 			break;
 		}
 		case 0: {

@@ -9,6 +9,7 @@ namespace MyPaint {
 	const TGAColor RED = TGAColor(255, 0, 0, 255);
 	const TGAColor GREEN = TGAColor(0, 255, 0, 255);
 	const TGAColor BLUE = TGAColor(0, 0, 255, 255);
+	const TGAColor BLACK = TGAColor(0, 0, 0, 0);
 	const float PI = 3.14;
 	
 	void mydeg(float &e, int what);
@@ -34,8 +35,8 @@ namespace MyPaint {
 	// фигуры и не только
 	void drawFigure(Figure* figure, TGAImage& image, TGAColor color, std::vector<int> place);
 
-	void drawObj_lines(std::vector<std::vector<int>> * ribs, MyMatrix* vertex, TGAImage &image, TGAColor color);
-	void drawObj_zalivka(Model * mod_, TGAImage &image, TGAColor color);
+	void drawObj_lines(std::vector<std::vector<int>> * ribs, MyMatrix * vertex, TGAImage &image, TGAColor color);
+	void drawObj_zalivka(std::vector<std::vector<int>> * ribs, MyMatrix * vertex, TGAImage &image, TGAColor color);
 
 	//методы_заливки_________________________________
 	void an_iterative_algorithm_with_a_seed(Point point, std::vector<int> place, TGAImage& image, TGAColor color);
